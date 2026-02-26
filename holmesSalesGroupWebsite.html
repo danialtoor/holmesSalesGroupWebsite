@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holmes Sales Group — Get Your Product in the Spec</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #111820; --steel: #1e2d3d; --steel-mid: #2c4157;
+  --amber: #d4831a; --amber-light: #f0a535;
+  --concrete: #e8e4de; --fog: #f4f1ec; --mist: #9aa8b5; --white: #ffffff;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'IBM Plex Sans', sans-serif; background: var(--fog); color: var(--ink); overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); background-size: 200px; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: rgba(17,24,32,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,131,26,0.15); }
+.nav-logo-top { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+.nav-logo-sub { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); font-weight: 300; }
+.nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--amber-light); }
+.nav-cta { background: var(--amber) !important; color: var(--white) !important; padding: 8px 20px !important; font-weight: 500 !important; cursor: pointer; border: none; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-cta:hover { background: var(--amber-light) !important; }
+
+/* HERO */
+.hero { min-height: 100vh; background: var(--ink); display: flex; align-items: flex-end; position: relative; overflow: hidden; padding: 0 5% 5%; }
+.hero-blueprint { position: absolute; inset: 0; background-image: linear-gradient(rgba(30,45,61,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(30,45,61,0.6) 1px, transparent 1px); background-size: 52px 52px; opacity: 0.5; }
+.hero-glow { position: absolute; top: 20%; left: 55%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,131,26,0.15) 0%, transparent 65%); pointer-events: none; }
+.hero-content { max-width: 1100px; width: 100%; margin: 0 auto; padding-top: 130px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: end; }
+.hero-tag { display: inline-flex; align-items: center; gap: 10px; background: rgba(212,131,26,0.12); border: 1px solid rgba(212,131,26,0.3); color: var(--amber-light); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 6px 13px; margin-bottom: 24px; font-weight: 500; }
+.hero-tag span { display: inline-block; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.4rem, 6vw, 6.8rem); line-height: 0.92; letter-spacing: 0.03em; color: var(--white); margin-bottom: 24px; }
+h1 .accent { color: var(--amber); }
+h1 .thin { color: rgba(255,255,255,0.3); }
+.hero-desc { color: rgba(255,255,255,0.55); font-size: 0.97rem; line-height: 1.8; font-weight: 300; margin-bottom: 36px; }
+.hero-desc strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { background: var(--amber); color: var(--white); padding: 13px 28px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: all 0.25s; display: inline-block; font-family: 'IBM Plex Sans', sans-serif; }
+.btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: all 0.25s; }
+.btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+.hero-right { padding-bottom: 8px; animation: fadeUp 1s ease 0.4s both; }
+.hero-quote { border-left: 3px solid var(--amber); padding: 24px; background: rgba(255,255,255,0.03); }
+.hero-quote-text { font-family: 'Lora', serif; font-style: italic; color: rgba(255,255,255,0.75); font-size: 0.97rem; line-height: 1.7; margin-bottom: 12px; }
+.hero-quote-attr { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); font-weight: 500; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
+
+/* TICKER */
+.ticker { background: var(--amber); padding: 11px 0; overflow: hidden; white-space: nowrap; }
+.ticker-track { display: inline-block; animation: ticker 22s linear infinite; }
+.ticker-track span { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.18em; color: var(--ink); margin-right: 48px; }
+.ticker-track span::before { content: '◆  '; font-size: 0.5rem; vertical-align: middle; margin-right: 12px; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* SHARED */
+section { padding: 80px 5%; position: relative; z-index: 1; }
+.inner { max-width: 1100px; margin: 0 auto; }
+.eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); font-weight: 500; display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--amber); }
+h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem); letter-spacing: 0.04em; line-height: 1.05; margin-bottom: 16px; }
+
+/* PROBLEM */
+.problem { background: var(--fog); }
+.problem-story { font-family: 'Lora', serif; font-size: 1.02rem; line-height: 1.85; color: #3a4a56; max-width: 720px; margin-top: 40px; }
+.problem-story p { margin-bottom: 18px; }
+.problem-story strong { color: var(--ink); font-weight: 600; }
+.problem-story em { color: var(--amber); font-style: normal; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; font-size: 0.93rem; }
+.problem-honest { margin-top: 32px; background: var(--steel); padding: 24px 28px; border-left: 4px solid var(--amber); max-width: 720px; }
+.problem-honest-text { color: rgba(255,255,255,0.52); font-size: 0.86rem; line-height: 1.75; font-weight: 300; }
+.problem-honest-text strong { color: var(--amber-light); font-weight: 500; }
+
+/* HOW IT WORKS */
+.spec-explainer { background: var(--steel); }
+.spec-explainer h2 { color: var(--white); }
+.spec-intro { color: rgba(255,255,255,0.45); font-size: 0.93rem; line-height: 1.8; font-weight: 300; max-width: 520px; margin-bottom: 44px; }
+.spec-timeline-wrap { overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: rgba(212,131,26,0.3) transparent; }
+.spec-timeline-wrap::-webkit-scrollbar { height: 4px; }
+.spec-timeline-wrap::-webkit-scrollbar-track { background: transparent; }
+.spec-timeline-wrap::-webkit-scrollbar-thumb { background: rgba(212,131,26,0.3); border-radius: 2px; }
+.spec-timeline { display: flex; align-items: flex-start; min-width: 680px; position: relative; padding-bottom: 8px; }
+.spec-timeline::before { content: ''; position: absolute; top: 27px; left: 28px; right: 28px; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(212,131,26,0.5) 8%, rgba(212,131,26,0.5) 92%, transparent 100%); }
+.spec-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; position: relative; }
+.spec-step-dot { width: 54px; height: 54px; border: 1px solid rgba(212,131,26,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 14px; background: var(--steel); position: relative; z-index: 1; transition: all 0.3s; flex-shrink: 0; }
+.spec-step:hover .spec-step-dot { background: var(--amber); border-color: var(--amber); }
+.spec-step-title { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.75); font-weight: 500; margin-bottom: 6px; }
+.spec-step-desc { font-size: 0.72rem; color: rgba(255,255,255,0.32); line-height: 1.55; font-weight: 300; }
+
+/* PROJECTS */
+.projects { background: var(--ink); }
+.projects h2 { color: var(--white); }
+.projects-intro { color: rgba(255,255,255,0.38); font-size: 0.93rem; line-height: 1.8; font-weight: 300; max-width: 520px; margin-bottom: 40px; }
+.projects-table { width: 100%; border-collapse: collapse; }
+.projects-table thead tr { border-bottom: 1px solid rgba(212,131,26,0.3); }
+.projects-table th { font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); font-weight: 500; padding: 0 16px 12px 0; text-align: left; }
+.projects-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+.projects-table tbody tr:hover { background: rgba(212,131,26,0.05); }
+.projects-table td { padding: 13px 16px 13px 0; font-size: 0.84rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.4; vertical-align: top; }
+.projects-table td:first-child { color: rgba(255,255,255,0.85); font-weight: 400; }
+.proj-product { display: inline-block; font-size: 0.66rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; background: rgba(212,131,26,0.12); border: 1px solid rgba(212,131,26,0.25); color: var(--amber-light); white-space: nowrap; }
+
+/* ABOUT */
+.about { background: var(--fog); }
+.about-grid { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: start; margin-top: 40px; }
+.about-bio { font-family: 'Lora', serif; font-size: 1rem; line-height: 1.82; color: #3a4a56; max-width: 580px; }
+.about-bio p { margin-bottom: 16px; }
+.about-bio strong { color: var(--ink); font-weight: 600; }
+.about-bio em { color: var(--amber); font-style: italic; }
+.about-dodge { margin-top: 16px; padding: 16px 20px; background: var(--steel); border-left: 3px solid var(--amber); font-size: 0.83rem; color: rgba(255,255,255,0.48); line-height: 1.7; font-weight: 300; }
+.about-dodge strong { color: var(--amber-light); font-weight: 500; }
+.cred-strip { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.cred-tile { background: var(--white); border: 1px solid var(--concrete); padding: 18px 22px; min-width: 140px; }
+.cred-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--amber); line-height: 1; margin-bottom: 3px; }
+.cred-label { font-size: 0.61rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mist); line-height: 1.4; }
+
+/* PRICING */
+.pricing { background: var(--steel); }
+.pricing h2 { color: var(--white); }
+.pricing-intro { color: rgba(255,255,255,0.42); font-size: 0.95rem; line-height: 1.8; font-weight: 300; max-width: 540px; margin-bottom: 40px; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.price-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 32px 28px; position: relative; border-top: 2px solid transparent; transition: border-top-color 0.3s; }
+.price-card.featured { border-top-color: var(--amber); background: rgba(212,131,26,0.06); }
+.price-badge { position: absolute; top: -11px; left: 24px; background: var(--amber); color: var(--white); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 12px; font-weight: 500; }
+.price-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.06em; color: var(--white); margin-bottom: 7px; }
+.price-desc { font-size: 0.84rem; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,0.45); margin-bottom: 22px; }
+.price-includes { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.price-includes li { font-size: 0.82rem; display: flex; gap: 9px; align-items: flex-start; color: rgba(255,255,255,0.5); }
+.price-includes li::before { content: '✓'; color: var(--amber); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+
+/* CONTACT */
+.contact { background: var(--fog); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; }
+.contact h2 { color: var(--ink); margin-bottom: 14px; }
+.contact-blurb { color: #6a7a88; font-size: 0.91rem; line-height: 1.8; font-weight: 300; margin-bottom: 28px; }
+.contact-detail { display: flex; align-items: center; gap: 12px; color: #5a6a78; font-size: 0.85rem; margin-bottom: 10px; }
+.contact-detail .icon { width: 30px; height: 30px; background: var(--steel); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+
+/* SHARED FORM */
+.form-wrap { display: flex; flex-direction: column; gap: 13px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-wrap label { display: block; font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6a7a88; margin-bottom: 5px; font-weight: 500; }
+.form-wrap input, .form-wrap textarea { width: 100%; padding: 11px 13px; background: var(--white); border: 1px solid var(--concrete); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.86rem; color: var(--ink); outline: none; transition: border 0.2s; }
+.form-wrap input:focus, .form-wrap textarea:focus { border-color: var(--amber); }
+.form-wrap textarea { height: 100px; resize: vertical; }
+.form-submit { width: 100%; padding: 14px; background: var(--amber); color: var(--white); border: none; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 4px; }
+.form-submit:hover { background: var(--amber-light); }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(10,16,22,0.88); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--fog); width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; padding: 40px 36px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; scrollbar-width: thin; }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--mist); line-height: 1; transition: color 0.2s; }
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 6px; line-height: 1.05; }
+.modal-sub { font-size: 0.83rem; color: #6a7a88; line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+
+/* FOOTER */
+footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(212,131,26,0.15); }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--white); }
+.footer-logo span { color: var(--amber); }
+.footer-links { display: flex; gap: 24px; list-style: none; }
+.footer-links a { color: rgba(255,255,255,0.28); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.footer-links a:hover { color: var(--amber); }
+.footer-copy { color: rgba(255,255,255,0.18); font-size: 0.7rem; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 16px 5%; }
+  .nav-links { display: none; }
+  .hero-content { grid-template-columns: 1fr; gap: 32px; }
+  .hero-right { animation: none; opacity: 1; transform: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .cred-strip { flex-direction: row; flex-wrap: wrap; }
+  .cred-tile { flex: 1; min-width: 100px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  footer { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+  .modal { padding: 28px 22px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-top">Holmes Sales Group</div>
+    <div class="nav-logo-sub">Building Product Specification</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#how-spec-works">How It Works</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About Doug</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><button class="nav-cta" onclick="openModal()">Free Audit</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-blueprint"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div style="animation: fadeUp 0.9s ease both;">
+      <div class="hero-tag"><span></span> Building Product Specification Strategy</div>
+      <h1>
+        If You're Not<br>
+        In <span class="accent">The Spec,</span><br>
+        <span class="thin">You Can't</span><br>
+        Win The Sale.
+      </h1>
+      <p class="hero-desc">Architects pick the products. Construction documents lock in the brands. <strong>Holmes Sales Group gets your product into those specs</strong> — before the bid window closes, across every division, anywhere in the US.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal()">Get a Free Spec Audit →</button>
+        <a href="#how-spec-works" class="btn-ghost">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-quote">
+        <div class="hero-quote-text">"The architect picks the product. They are the design professional. If your brand isn't in the specification, you don't have a chance."</div>
+        <div class="hero-quote-attr">Doug Holmes — Founder, Holmes Sales Group</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Division 7 — Thermal & Moisture</span><span>HVAC Systems</span><span>Structural Products</span><span>Flooring</span><span>Plumbing</span><span>Electrical</span><span>Cladding & Envelope</span><span>A&D Outreach</span><span>CSI Certified</span><span>Nationwide Reach</span>
+    <span>Division 7 — Thermal & Moisture</span><span>HVAC Systems</span><span>Structural Products</span><span>Flooring</span><span>Plumbing</span><span>Electrical</span><span>Cladding & Envelope</span><span>A&D Outreach</span><span>CSI Certified</span><span>Nationwide Reach</span>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="problem" id="problem">
+  <div class="inner">
+    <div class="eyebrow">The Reality</div>
+    <h2>Every Building Project Has a Specification.<br>Is Your Product In It?</h2>
+    <div class="problem-story reveal">
+      <p>When a building project is planned — a county facility in Kane County, a school in Western Springs, a healthcare campus in Indiana — an architectural firm creates the <strong>construction documents</strong>. Inside those documents is a specification for every single product in that building.</p>
+      <p>Ceiling tiles. Air barriers. Cladding systems. HVAC components. Flooring. Structural products. <strong>Every one has a brand listed.</strong> Often three manufacturers per category. Those are the brands that get considered. Those are the brands that win the work.</p>
+      <p>If you're not in the specification, you don't get a shot at the sale. There's also a hard cutoff — typically <em>two weeks before bid</em>, the architect stops accepting addendums. After that window closes, no new brands are added. It doesn't matter how good your product is.</p>
+      <p>Most manufacturers know their product inside and out. <strong>What they don't have is someone in the room with the architect early enough</strong>, with the right technical documentation, making the case for inclusion. That's what I do.</p>
+    </div>
+    <div class="problem-honest reveal">
+      <div class="problem-honest-text">Think of Tyvek — that white air barrier wrap you see before siding goes on. DuPont owns that spec on most projects. A competitor with a better or cheaper product has almost no chance unless someone advocates to get them listed. <strong>That's exactly the kind of work we do every day.</strong><br><br>Not every product is a fit — and if yours isn't, I'll tell you that upfront. Every engagement starts with an honest look at whether the spec pipeline is actually there.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="spec-explainer" id="how-spec-works">
+  <div class="inner">
+    <div class="eyebrow" style="color:var(--amber)">The Specification Process</div>
+    <h2>From Concept to Construction Doc.</h2>
+    <p class="spec-intro">Understanding where your product needs to be — and when — is the difference between winning projects and watching competitors take them.</p>
+    <div class="spec-timeline-wrap reveal">
+      <div class="spec-timeline">
+        <div class="spec-step">
+          <div class="spec-step-dot">📐</div>
+          <div class="spec-step-title">Schematics</div>
+          <div class="spec-step-desc">Architect scopes the project — size, use, requirements</div>
+        </div>
+        <div class="spec-step">
+          <div class="spec-step-dot">📋</div>
+          <div class="spec-step-title">Construction Docs</div>
+          <div class="spec-step-desc">Written specs + drawings for every product category</div>
+        </div>
+        <div class="spec-step">
+          <div class="spec-step-dot">🏷️</div>
+          <div class="spec-step-title">Brands Listed</div>
+          <div class="spec-step-desc">3+ manufacturers named per division — the only ones considered at bid</div>
+        </div>
+        <div class="spec-step">
+          <div class="spec-step-dot">⏱️</div>
+          <div class="spec-step-title">Addendum Window</div>
+          <div class="spec-step-desc">~2 weeks before bid. Last chance to get added</div>
+        </div>
+        <div class="spec-step">
+          <div class="spec-step-dot">🏗️</div>
+          <div class="spec-step-title">Bid & Build</div>
+          <div class="spec-step-desc">Contractors select from spec only. You either win or you don't.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL PROJECTS -->
+<section class="projects" id="projects">
+  <div class="inner">
+    <div class="eyebrow" style="color:var(--amber)">Track Record</div>
+    <h2 style="color:var(--white)">Real Projects. Real Specs Won.</h2>
+    <p class="projects-intro">A sample of projects where Doug Holmes secured product specifications — across product types, architects, and markets from Chicago to Minnesota to Indiana.</p>
+    <table class="projects-table reveal">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Location</th>
+          <th>Architect / GC</th>
+          <th>Product Specified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hamburger University / McDonald's Corporation</td>
+          <td>Oak Brook, IL</td>
+          <td>Gensler Chicago</td>
+          <td><span class="proj-product">Architectural Hardware</span></td>
+        </tr>
+        <tr>
+          <td>Nexus Park</td>
+          <td>Columbus, IN</td>
+          <td>Perkins Will Chicago</td>
+          <td><span class="proj-product">Operable Partitions</span></td>
+        </tr>
+        <tr>
+          <td>Bowen Health Care</td>
+          <td>Multiple — Indiana</td>
+          <td>MKM Architecture, Ft. Wayne</td>
+          <td><span class="proj-product">Acoustic Ceiling</span></td>
+        </tr>
+        <tr>
+          <td>R.C. Hinsdale Elementary School</td>
+          <td>Edgewood, KY</td>
+          <td>Emboss Design</td>
+          <td><span class="proj-product">ACM Panels</span></td>
+        </tr>
+        <tr>
+          <td>Gail Borden Public Library</td>
+          <td>Elgin, IL</td>
+          <td>Frye Gillian Molinaro Architects</td>
+          <td><span class="proj-product">Operable / Glass Operable Partitions</span></td>
+        </tr>
+        <tr>
+          <td>Forest Hills Elementary School</td>
+          <td>Western Springs, IL</td>
+          <td>FH Paschen, Chicago</td>
+          <td><span class="proj-product">Operable Partitions</span></td>
+        </tr>
+        <tr>
+          <td>Metro State University</td>
+          <td>St. Paul, MN</td>
+          <td>JLG Architects, Minneapolis</td>
+          <td><span class="proj-product">Glass Operable Partitions</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ABOUT DOUG -->
+<section class="about" id="about">
+  <div class="inner">
+    <div class="eyebrow">About Doug Holmes</div>
+    <h2>25 Years. 6 Manufacturers. One Niche.</h2>
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-bio">
+          <p>Doug Holmes is a building products sales and specification professional with <strong>25+ years of experience</strong> helping manufacturers drive demand through the architectural specification process — positioning products with architects, securing specifications, and supporting them through bidding and into completed sales.</p>
+          <p>Trained under six major manufacturers and <em>certified by the Construction Specifications Institute</em>, Doug launched Holmes Sales Group to serve manufacturers with strong products that are losing specs to bigger, better-resourced competitors. He works as a <strong>1099 independent</strong> — no competing product lines, no divided loyalties.</p>
+        </div>
+        <div class="about-dodge">
+          Uses <strong>Dodge Construction and ConstructConnect</strong> to find matching projects anywhere in the US — identify the architect, build the case, advocate for inclusion. <strong>Before the window closes.</strong>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="cred-strip">
+          <div class="cred-tile"><div class="cred-num">25+</div><div class="cred-label">Years in Industry</div></div>
+          <div class="cred-tile"><div class="cred-num">6</div><div class="cred-label">Manufacturers Trained Under</div></div>
+          <div class="cred-tile"><div class="cred-num">CSI</div><div class="cred-label">Certified Spec Professional</div></div>
+          <div class="cred-tile"><div class="cred-num">1099</div><div class="cred-label">Independent — No Competing Lines</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="inner">
+    <div class="eyebrow" style="color:var(--amber)">How We Work Together</div>
+    <h2 style="color:var(--white)">Simple, Performance-Aligned Pricing.</h2>
+    <p class="pricing-intro">Like a law firm, you're retaining a specialist. A base monthly fee for ongoing spec development activity, with performance incentives when your product gets added to a specification.</p>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-name">Base Engagement</div>
+        <div class="price-desc">Monthly retainer covering project research, architect outreach, and specification advocacy.</div>
+        <ul class="price-includes">
+          <li>Monthly pipeline research via Dodge & ConstructConnect</li>
+          <li>Architect and A&D firm outreach</li>
+          <li>Technical documentation preparation and delivery</li>
+          <li>Progress reporting and project updates</li>
+          <li>Competitive spec audit at onboarding</li>
+        </ul>
+        <button class="btn-primary" onclick="openModal()">Get a Quote →</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Base + Performance</div>
+        <div class="price-desc">Lower monthly base plus a per-specification success fee — you pay more when we deliver, less while building the pipeline.</div>
+        <ul class="price-includes">
+          <li>Everything in Base Engagement</li>
+          <li>Per-specification success fee on results</li>
+          <li>Priority project targeting for your category</li>
+          <li>Expanded A&D presentation coverage</li>
+          <li>Public and private sector support</li>
+        </ul>
+        <button class="btn-primary" onclick="openModal()">Get a Quote →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="inner">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow">Let's Talk</div>
+        <h2>Start With a Free Spec Audit.</h2>
+        <p class="contact-blurb">Tell me your product and your top competitors. I run them through Dodge Construction and ConstructConnect and show you exactly where they're getting specified — and where you're not. No cost, no commitment.</p>
+        <div class="contact-detail"><div class="icon">✉</div> info@holmessalesgroup.com</div>
+        <div class="contact-detail"><div class="icon">📍</div> Chicagoland-based · Nationwide reach</div>
+      </div>
+      <div class="reveal">
+        <form class="form-wrap" onsubmit="return false;">
+          <div class="form-row">
+            <div><label>First Name</label><input type="text" placeholder="John"></div>
+            <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
+          <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
+          <div><label>What Product Do You Manufacture?</label><input type="text" placeholder="e.g. Air barriers, cladding systems, HVAC components…"></div>
+          <div><label>Who Are Your Top Competitors?</label><input type="text" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+          <div><label>Anything Else?</label><textarea placeholder="Tell us about your product, the markets you're targeting, or where you're hitting friction…"></textarea></div>
+          <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Holmes <span>Sales</span> Group, Inc.</div>
+  <ul class="footer-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#how-spec-works">How It Works</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Holmes Sales Group, Inc. · Building Product Specification · Nationwide</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="modal-eyebrow">🔍 Free Competitive Audit</div>
+    <h3>Let's See Where You're Missing in the Spec.</h3>
+    <p class="modal-sub">Tell me your product and your top competitors. I'll run them through Dodge Construction and ConstructConnect and show you exactly where they're getting specified — and where you're not. No cost, no commitment.</p>
+    <form class="form-wrap" onsubmit="return false;">
+      <div class="form-row">
+        <div><label>First Name</label><input type="text" placeholder="John"></div>
+        <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+      </div>
+      <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
+      <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
+      <div><label>What Product Do You Manufacture?</label><input type="text" placeholder="e.g. Air barriers, cladding systems, HVAC components…"></div>
+      <div><label>Who Are Your Top Competitors?</label><input type="text" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+      <div><label>Anything Else?</label><textarea placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
