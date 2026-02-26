@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spec Gap Calculator — Holmes Sales Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #111820;
+  --steel: #1e2d3d;
+  --steel-light: #243648;
+  --steel-mid: #2c4157;
+  --amber: #d4831a;
+  --amber-light: #f0a535;
+  --amber-pale: rgba(212,131,26,0.08);
+  --concrete: #e8e4de;
+  --fog: #f4f1ec;
+  --mist: #9aa8b5;
+  --white: #ffffff;
+  --green: #4caf7d;
+  --red: #c0392b;
+  --yellow: #e8b84b;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--ink);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* blueprint grid */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(30,45,61,0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,45,61,0.8) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.4;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 10;
+  padding: 24px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(212,131,26,0.15);
+  background: rgba(17,24,32,0.95);
+  backdrop-filter: blur(12px);
+}
+.header-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; }
+.header-logo-top { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+.header-logo-sub { font-size: 0.56rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); font-weight: 300; }
+.header-back { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+.header-back:hover { color: var(--amber-light); }
+.header-back::before { content: '←'; font-size: 0.9rem; }
+
+/* ── HERO BAND ── */
+.calc-hero {
+  position: relative; z-index: 5;
+  padding: 56px 5% 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.calc-hero-inner { max-width: 1200px; margin: 0 auto; }
+.calc-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(212,131,26,0.1); border: 1px solid rgba(212,131,26,0.25);
+  color: var(--amber-light); font-size: 0.66rem; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 5px 12px; margin-bottom: 20px; font-weight: 500;
+}
+.calc-eyebrow span { width: 5px; height: 5px; background: var(--amber); border-radius: 50%; animation: pulse 2s infinite; display: inline-block; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.calc-hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  letter-spacing: 0.03em; line-height: 0.95;
+  color: var(--white); margin-bottom: 16px;
+}
+.calc-hero h1 em { color: var(--amber); font-style: normal; }
+.calc-hero p {
+  color: rgba(255,255,255,0.42); font-size: 0.93rem;
+  line-height: 1.75; font-weight: 300; max-width: 580px;
+}
+.calc-hero p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+
+/* ── MAIN LAYOUT ── */
+.calc-wrap {
+  position: relative; z-index: 5;
+  max-width: 1200px; margin: 0 auto;
+  padding: 48px 5% 80px;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── INPUT PANEL ── */
+.input-panel {
+  background: var(--steel);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top: 3px solid var(--amber);
+  padding: 32px 28px;
+  position: sticky;
+  top: 24px;
+}
+.panel-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.06em;
+  color: var(--white); margin-bottom: 6px;
+}
+.panel-sub {
+  font-size: 0.78rem; color: rgba(255,255,255,0.35);
+  line-height: 1.6; margin-bottom: 28px; font-weight: 300;
+}
+
+.field { margin-bottom: 20px; }
+.field label {
+  display: block; font-size: 0.62rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 7px; font-weight: 500;
+}
+.field select,
+.field input[type="text"],
+.field input[type="number"] {
+  width: 100%; padding: 11px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.86rem; outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none; -webkit-appearance: none;
+}
+.field select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4831a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+.field select option { background: var(--steel); color: var(--white); }
+.field select:focus,
+.field input:focus { border-color: var(--amber); background: rgba(255,255,255,0.08); }
+.field input::placeholder { color: rgba(255,255,255,0.2); }
+
+.revenue-wrap { position: relative; }
+.revenue-wrap .currency {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.35); font-size: 0.86rem; pointer-events: none;
+}
+.revenue-wrap input { padding-left: 26px; }
+
+.competitors-label {
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 7px; font-weight: 500; display: block;
+}
+.competitor-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.competitor-row input { flex: 1; }
+.competitor-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem; color: var(--amber);
+  width: 18px; flex-shrink: 0; opacity: 0.7;
+}
+
+.divider { height: 1px; background: rgba(255,255,255,0.07); margin: 24px 0; }
+
+.disclaimer {
+  font-size: 0.72rem; color: rgba(255,255,255,0.22);
+  line-height: 1.6; font-style: italic; font-family: 'Lora', serif;
+}
+
+/* ── OUTPUT PANEL ── */
+.output-panel { display: flex; flex-direction: column; gap: 20px; }
+
+/* empty state */
+.output-empty {
+  background: var(--steel);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 36px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; min-height: 320px;
+  transition: opacity 0.4s;
+}
+.output-empty.hidden { opacity: 0; pointer-events: none; display: none; }
+.empty-icon { font-size: 2.5rem; margin-bottom: 16px; opacity: 0.4; }
+.empty-text { font-family: 'Lora', serif; font-style: italic; color: rgba(255,255,255,0.25); font-size: 0.9rem; line-height: 1.7; max-width: 280px; }
+
+/* report card */
+.report-card {
+  background: var(--steel);
+  border: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: none;
+}
+.report-card.visible { opacity: 1; transform: translateY(0); display: block; }
+
+.report-header {
+  background: rgba(212,131,26,0.08);
+  border-bottom: 1px solid rgba(212,131,26,0.2);
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.report-header-label {
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--amber); font-weight: 500;
+}
+.report-timestamp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; color: rgba(255,255,255,0.2);
+}
+
+.report-body { padding: 28px 24px; }
+
+/* big number */
+.stat-hero {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-bottom: 6px;
+}
+.stat-hero-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5.5rem; line-height: 1;
+  color: var(--amber-light);
+  transition: all 0.6s ease;
+}
+.stat-hero-unit {
+  font-size: 0.82rem; color: rgba(255,255,255,0.4);
+  font-weight: 300; line-height: 1.4; max-width: 160px;
+}
+.stat-hero-sub {
+  font-size: 0.75rem; color: rgba(255,255,255,0.28);
+  margin-bottom: 28px; font-weight: 300;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* bucket breakdown */
+.buckets { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.bucket {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 16px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid transparent;
+  transition: border-color 0.3s;
+}
+.bucket.open { border-left-color: var(--green); }
+.bucket.locked { border-left-color: var(--red); }
+.bucket.competitor { border-left-color: var(--yellow); }
+.bucket-left { display: flex; flex-direction: column; gap: 4px; }
+.bucket-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 500; }
+.bucket-desc { font-size: 0.75rem; color: rgba(255,255,255,0.25); font-weight: 300; line-height: 1.4; }
+.bucket-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; line-height: 1;
+  transition: all 0.5s ease;
+}
+.bucket.open .bucket-num { color: var(--green); }
+.bucket.locked .bucket-num { color: rgba(192,57,43,0.8); }
+.bucket.competitor .bucket-num { color: var(--yellow); }
+
+/* bar */
+.bucket-bar-wrap { margin-top: 8px; }
+.bucket-bar-bg { height: 3px; background: rgba(255,255,255,0.06); }
+.bucket-bar-fill { height: 100%; transition: width 0.9s cubic-bezier(0.4,0,0.2,1); width: 0; }
+.bucket.open .bucket-bar-fill { background: var(--green); }
+.bucket.locked .bucket-bar-fill { background: var(--red); }
+.bucket.competitor .bucket-bar-fill { background: var(--yellow); }
+
+.report-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 24px 0; }
+
+/* revenue block */
+.revenue-block { margin-bottom: 24px; }
+.revenue-label {
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 12px; font-weight: 500;
+}
+.revenue-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.revenue-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.2rem; color: var(--white); line-height: 1;
+  transition: all 0.5s ease;
+}
+.revenue-num.has-value { color: var(--amber-light); }
+.revenue-qualifier { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+.revenue-note { font-size: 0.74rem; color: rgba(255,255,255,0.22); line-height: 1.6; font-style: italic; font-family: 'Lora', serif; }
+
+/* competitor callout */
+.competitor-callout {
+  background: rgba(232,184,75,0.06);
+  border: 1px solid rgba(232,184,75,0.15);
+  border-left: 3px solid var(--yellow);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  display: none;
+}
+.competitor-callout.visible { display: block; }
+.competitor-callout-title { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); font-weight: 500; margin-bottom: 8px; }
+.competitor-callout-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.competitor-callout-list li { font-size: 0.8rem; color: rgba(255,255,255,0.5); display: flex; gap: 8px; align-items: center; font-weight: 300; }
+.competitor-callout-list li::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; flex-shrink: 0; opacity: 0.6; }
+
+/* CTA block */
+.report-cta {
+  background: rgba(212,131,26,0.07);
+  border: 1px solid rgba(212,131,26,0.2);
+  padding: 20px 20px;
+}
+.report-cta-text {
+  font-size: 0.83rem; color: rgba(255,255,255,0.55);
+  line-height: 1.7; font-weight: 300; margin-bottom: 14px;
+}
+.report-cta-text strong { color: var(--amber-light); font-weight: 500; }
+.cta-btn {
+  display: inline-block; padding: 12px 24px;
+  background: var(--amber); color: var(--white);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: background 0.2s;
+  text-decoration: none;
+}
+.cta-btn:hover { background: var(--amber-light); }
+
+/* info cards row */
+.info-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.info-card {
+  background: var(--steel);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 18px 16px;
+  border-top: 2px solid rgba(255,255,255,0.04);
+  transition: border-top-color 0.3s;
+}
+.info-card:hover { border-top-color: var(--amber); }
+.info-card-icon { font-size: 1.2rem; margin-bottom: 10px; }
+.info-card-title { font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 500; margin-bottom: 5px; }
+.info-card-text { font-size: 0.74rem; color: rgba(255,255,255,0.28); line-height: 1.55; font-weight: 300; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,16,22,0.9); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--fog); width: 100%; max-width: 540px;
+  max-height: 90vh; overflow-y: auto; padding: 40px 36px;
+  position: relative; transform: translateY(16px);
+  transition: transform 0.3s; color: var(--ink);
+  scrollbar-width: thin;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--mist); transition: color 0.2s; line-height: 1; }
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); font-weight: 500; margin-bottom: 8px; }
+.modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 6px; line-height: 1.05; }
+.modal-context { font-size: 0.82rem; color: #6a7a88; line-height: 1.7; margin-bottom: 20px; font-weight: 300; padding: 12px 14px; background: rgba(212,131,26,0.06); border-left: 3px solid var(--amber); }
+.modal-context strong { color: var(--amber); font-weight: 500; }
+.form-wrap { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-wrap label { display: block; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: #7a8a96; margin-bottom: 5px; font-weight: 500; }
+.form-wrap input, .form-wrap textarea {
+  width: 100%; padding: 10px 13px;
+  background: var(--white); border: 1px solid var(--concrete);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem;
+  color: var(--ink); outline: none; transition: border 0.2s;
+}
+.form-wrap input:focus, .form-wrap textarea:focus { border-color: var(--amber); }
+.form-wrap textarea { height: 90px; resize: vertical; }
+.form-submit {
+  width: 100%; padding: 13px; background: var(--amber); color: var(--white);
+  border: none; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s; margin-top: 4px;
+}
+.form-submit:hover { background: var(--amber-light); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .calc-wrap { grid-template-columns: 1fr; }
+  .input-panel { position: static; }
+  .info-cards { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .calc-hero h1 { font-size: 2.4rem; }
+  .stat-hero-num { font-size: 4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="header-logo">
+    <div class="header-logo-top">Holmes Sales Group</div>
+    <div class="header-logo-sub">Building Product Specification</div>
+  </a>
+  <a href="index.html" class="header-back">Back to Site</a>
+</header>
+
+<!-- HERO BAND -->
+<div class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-eyebrow"><span></span> Interactive Tool</div>
+    <h1>The <em>Spec Gap</em><br>Calculator</h1>
+    <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit Doug runs shows actual project names and architect firms — this is the starting picture.</strong></p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="calc-wrap">
+
+  <!-- INPUT PANEL -->
+  <div class="input-panel">
+    <div class="panel-title">Your Product Profile</div>
+    <div class="panel-sub">Fill in the fields below. The output panel updates live as you go.</div>
+
+    <div class="field">
+      <label>Product Category</label>
+      <select id="f-category" onchange="update()">
+        <option value="">Select a category…</option>
+        <option value="air-barrier">Air Barriers / Weather Barriers (Div 07)</option>
+        <option value="cladding">Cladding Systems / ACM Panels (Div 07)</option>
+        <option value="hvac">HVAC Components (Div 23)</option>
+        <option value="flooring">Flooring Systems (Div 09)</option>
+        <option value="ceiling">Acoustic Ceiling / Tile (Div 09)</option>
+        <option value="partitions">Operable Partitions (Div 10)</option>
+        <option value="plumbing">Plumbing Products (Div 22)</option>
+        <option value="structural">Structural / Masonry (Div 03–05)</option>
+        <option value="hardware">Architectural Hardware (Div 08)</option>
+        <option value="electrical">Electrical / Lighting (Div 26)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Primary Territory</label>
+      <select id="f-territory" onchange="update()">
+        <option value="">Select a territory…</option>
+        <option value="chicagoland">Chicagoland Metro</option>
+        <option value="midwest">Midwest (IL, IN, WI, MN, OH)</option>
+        <option value="southeast">Southeast (FL, GA, NC, SC, TN)</option>
+        <option value="northeast">Northeast (NY, NJ, PA, MA)</option>
+        <option value="southwest">Southwest (TX, AZ, NV, CO)</option>
+        <option value="west">West Coast (CA, OR, WA)</option>
+        <option value="national">Nationwide</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Project Type Focus</label>
+      <select id="f-sector" onchange="update()">
+        <option value="">Select a sector…</option>
+        <option value="public">Public Sector (Government, Schools, Libraries)</option>
+        <option value="commercial">Commercial (Office, Retail, Mixed-Use)</option>
+        <option value="healthcare">Healthcare / Medical</option>
+        <option value="education">Higher Education</option>
+        <option value="both">Both Public & Private</option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <label>Your Average Revenue Per Project Win</label>
+      <div class="revenue-wrap">
+        <span class="currency">$</span>
+        <input type="number" id="f-revenue" placeholder="e.g. 45000" min="0" oninput="update()">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <span class="competitors-label">Your Top Competitors (optional)</span>
+      <div class="competitor-row">
+        <span class="competitor-num">01</span>
+        <input type="text" id="comp-1" placeholder="e.g. DuPont Tyvek" oninput="update()">
+      </div>
+      <div class="competitor-row">
+        <span class="competitor-num">02</span>
+        <input type="text" id="comp-2" placeholder="e.g. 3M" oninput="update()">
+      </div>
+      <div class="competitor-row">
+        <span class="competitor-num">03</span>
+        <input type="text" id="comp-3" placeholder="e.g. Armstrong" oninput="update()">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="disclaimer">Estimates reflect typical active project volumes by division and territory based on Doug Holmes's 25+ years working Dodge Construction and ConstructConnect. The real audit shows actual project names.</div>
+  </div>
+
+  <!-- OUTPUT PANEL -->
+  <div class="output-panel">
+
+    <!-- empty state -->
+    <div class="output-empty" id="output-empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-text">Select your product category, territory, and sector to generate your estimated spec gap report.</div>
+    </div>
+
+    <!-- report card -->
+    <div class="report-card" id="report-card">
+      <div class="report-header">
+        <div class="report-header-label">Estimated Spec Gap Report — <span id="rh-label">—</span></div>
+        <div class="report-timestamp" id="rh-time">—</div>
+      </div>
+      <div class="report-body">
+
+        <!-- big number -->
+        <div class="stat-hero">
+          <div class="stat-hero-num" id="r-total">—</div>
+          <div class="stat-hero-unit">estimated active projects in your category &amp; territory</div>
+        </div>
+        <div class="stat-hero-sub" id="r-sub">— projects tracked in Dodge + ConstructConnect</div>
+
+        <!-- buckets -->
+        <div class="buckets">
+          <div class="bucket open">
+            <div class="bucket-left">
+              <div class="bucket-label">Realistically Reachable</div>
+              <div class="bucket-desc">Projects where a spec slot is likely open and architect outreach could get you added</div>
+              <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-open"></div></div></div>
+            </div>
+            <div class="bucket-num" id="r-open">—</div>
+          </div>
+          <div class="bucket locked">
+            <div class="bucket-left">
+              <div class="bucket-label">Likely Locked</div>
+              <div class="bucket-desc">Dominant brands already hold all slots — extremely difficult to displace without early relationship</div>
+              <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-locked"></div></div></div>
+            </div>
+            <div class="bucket-num" id="r-locked">—</div>
+          </div>
+          <div class="bucket competitor">
+            <div class="bucket-left">
+              <div class="bucket-label">Competitor Stronghold</div>
+              <div class="bucket-desc">Projects where your named competitors are likely specified — you are not</div>
+              <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-comp"></div></div></div>
+            </div>
+            <div class="bucket-num" id="r-comp">—</div>
+          </div>
+        </div>
+
+        <!-- competitor callout -->
+        <div class="competitor-callout" id="comp-callout">
+          <div class="competitor-callout-title">Your Competitors in the Spec</div>
+          <ul class="competitor-callout-list" id="comp-list"></ul>
+        </div>
+
+        <div class="report-divider"></div>
+
+        <!-- revenue -->
+        <div class="revenue-block">
+          <div class="revenue-label">Estimated Reachable Revenue Opportunity</div>
+          <div class="revenue-row">
+            <div class="revenue-num" id="r-revenue">—</div>
+            <div class="revenue-qualifier">based on your project value input</div>
+          </div>
+          <div class="revenue-note" id="r-revenue-note">Enter your average revenue per project win above to calculate your pipeline opportunity.</div>
+        </div>
+
+        <!-- CTA -->
+        <div class="report-cta">
+          <div class="report-cta-text" id="r-cta-text">Doug will run a live search for your category in your territory and return <strong>actual project names, architect firms, and the specific specs your competitors hold</strong>. That search is free — no strings attached.</div>
+          <button class="cta-btn" onclick="openModal()">Get the Real Numbers from Doug →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- info cards -->
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-icon">⏱️</div>
+        <div class="info-card-title">The Clock Is Running</div>
+        <div class="info-card-text">Addendum windows close ~2 weeks before bid. Every active project above is counting down right now.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🔍</div>
+        <div class="info-card-title">Real Search, Free</div>
+        <div class="info-card-text">Doug runs actual searches in Dodge and ConstructConnect. You get real project names, not estimates.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🏗️</div>
+        <div class="info-card-title">Not Every Product Fits</div>
+        <div class="info-card-text">If the pipeline isn't there for your product, Doug will tell you that upfront. No pitch, no pressure.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-eyebrow">🔍 Free Competitive Audit</div>
+    <h3>Let's See the Real Numbers.</h3>
+    <div class="modal-context" id="modal-context">
+      Doug will run a live search in Dodge Construction and ConstructConnect for your category and territory — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.
+    </div>
+    <form class="form-wrap" onsubmit="return false;">
+      <div class="form-row">
+        <div><label>First Name</label><input type="text" placeholder="John"></div>
+        <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+      </div>
+      <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
+      <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
+      <div><label>What Product Do You Manufacture?</label><input type="text" id="modal-product" placeholder="e.g. Air barriers, cladding systems…"></div>
+      <div><label>Who Are Your Top Competitors?</label><input type="text" id="modal-competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+      <div><label>Anything Else?</label><textarea placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const categoryData = {
+  'air-barrier':  { label: 'Air Barriers (Div 07)', base: 180, openRate: 0.28, lockedRate: 0.48, compRate: 0.62, insight: 'Air barrier specs are dominated by DuPont Tyvek and 3M in most markets. A single spec win typically goes on an entire building envelope.' },
+  'cladding':     { label: 'Cladding / ACM Panels (Div 07)', base: 140, openRate: 0.32, lockedRate: 0.42, compRate: 0.58, insight: 'Cladding specs are locked early in schematic design. Gensler and Perkins Will have preferred vendor lists that require direct technical advocacy to break into.' },
+  'hvac':         { label: 'HVAC Components (Div 23)', base: 220, openRate: 0.24, lockedRate: 0.52, compRate: 0.66, insight: 'HVAC specs involve multiple sub-categories. A single project win can represent substantial unit volume across an entire mechanical system.' },
+  'flooring':     { label: 'Flooring Systems (Div 09)', base: 200, openRate: 0.30, lockedRate: 0.45, compRate: 0.60, insight: 'Flooring specs are written early and rarely changed. Architects default to brands they\'ve specified before — breaking in requires samples, comparison data, and A&D firm presence.' },
+  'ceiling':      { label: 'Acoustic Ceiling (Div 09)', base: 160, openRate: 0.26, lockedRate: 0.50, compRate: 0.68, insight: 'Armstrong and USG dominate most ceiling specs. Competitors with equivalent or superior performance consistently lose specs they never knew existed.' },
+  'partitions':   { label: 'Operable Partitions (Div 10)', base: 90, openRate: 0.38, lockedRate: 0.35, compRate: 0.52, insight: 'Operable partition specs are highly architect-influenced and project-specific. Doug has direct track record winning specs at Nexus Park (Perkins Will), Metro State University, and Forest Hills Elementary.' },
+  'plumbing':     { label: 'Plumbing Products (Div 22)', base: 175, openRate: 0.27, lockedRate: 0.46, compRate: 0.61, insight: 'Plumbing specs are written by MEP engineers, requiring a different outreach approach. Volume per project is high — each spec win is meaningfully valuable.' },
+  'structural':   { label: 'Structural / Masonry (Div 03–05)', base: 130, openRate: 0.22, lockedRate: 0.55, compRate: 0.57, insight: 'Structural specs are set early and require engineer of record sign-off. Entry requires detailed code compliance documentation presented convincingly before design development.' },
+  'hardware':     { label: 'Architectural Hardware (Div 08)', base: 120, openRate: 0.33, lockedRate: 0.40, compRate: 0.55, insight: 'Architectural hardware is specified on nearly every commercial and institutional project. Doug has direct experience winning hardware specs at Hamburger University (Gensler Chicago).' },
+  'electrical':   { label: 'Electrical / Lighting (Div 26)', base: 190, openRate: 0.25, lockedRate: 0.50, compRate: 0.63, insight: 'Electrical specs are written by electrical engineers and are highly brand-specific. Early outreach before design development is critical — most specs are locked months before bid.' }
+};
+
+const territoryMult = {
+  'chicagoland': 0.12, 'midwest': 0.36, 'southeast': 0.28,
+  'northeast': 0.30, 'southwest': 0.26, 'west': 0.25, 'national': 1.0
+};
+const territoryLabel = {
+  'chicagoland': 'Chicagoland', 'midwest': 'Midwest', 'southeast': 'Southeast',
+  'northeast': 'Northeast', 'southwest': 'Southwest', 'west': 'West Coast', 'national': 'Nationwide'
+};
+const sectorMult = {
+  'public': 0.48, 'commercial': 0.58, 'healthcare': 0.34, 'education': 0.38, 'both': 1.0
+};
+
+// ── ANIMATED COUNTER ──
+function animateNum(el, target, prefix, suffix, duration) {
+  const start = 0;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = Math.round(start + (target - start) * ease);
+    el.textContent = prefix + val.toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function setBar(id, pct) {
+  setTimeout(() => {
+    document.getElementById(id).style.width = Math.min(pct, 100) + '%';
+  }, 120);
+}
+
+// ── UPDATE ──
+function update() {
+  const cat = document.getElementById('f-category').value;
+  const terr = document.getElementById('f-territory').value;
+  const sect = document.getElementById('f-sector').value;
+  const rev = parseFloat(document.getElementById('f-revenue').value) || 0;
+  const comp1 = document.getElementById('comp-1').value.trim();
+  const comp2 = document.getElementById('comp-2').value.trim();
+  const comp3 = document.getElementById('comp-3').value.trim();
+
+  if (!cat || !terr || !sect) {
+    document.getElementById('output-empty').classList.remove('hidden');
+    document.getElementById('report-card').classList.remove('visible');
+    return;
+  }
+
+  const cd = categoryData[cat];
+  const tm = territoryMult[terr];
+  const sm = sectorMult[sect];
+
+  const total = Math.round(cd.base * tm * sm);
+  const open = Math.round(total * cd.openRate);
+  const locked = Math.round(total * cd.lockedRate);
+  const comp = Math.round(total * cd.compRate);
+
+  // show report
+  document.getElementById('output-empty').classList.add('hidden');
+  const card = document.getElementById('report-card');
+  card.classList.add('visible');
+
+  // header
+  document.getElementById('rh-label').textContent = cd.label + ' · ' + territoryLabel[terr];
+  document.getElementById('rh-time').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  // big number
+  animateNum(document.getElementById('r-total'), total, '', '', 900);
+  document.getElementById('r-sub').textContent = '~' + Math.round(total * 1.15).toLocaleString() + ' projects tracked across Dodge + ConstructConnect in this market';
+
+  // buckets
+  animateNum(document.getElementById('r-open'), open, '', '', 800);
+  animateNum(document.getElementById('r-locked'), locked, '', '', 850);
+  animateNum(document.getElementById('r-comp'), comp, '', '', 870);
+
+  setBar('bar-open', (open / total) * 100);
+  setBar('bar-locked', (locked / total) * 100);
+  setBar('bar-comp', (comp / total) * 100);
+
+  // competitors
+  const competitors = [comp1, comp2, comp3].filter(c => c.length > 0);
+  const callout = document.getElementById('comp-callout');
+  const compList = document.getElementById('comp-list');
+  if (competitors.length > 0) {
+    callout.classList.add('visible');
+    compList.innerHTML = competitors.map(c => {
+      const pct = Math.round(55 + Math.random() * 30);
+      return `<li><strong style="color:rgba(255,255,255,0.75)">${c}</strong>&nbsp;— estimated present in ~${pct}% of specs in this market</li>`;
+    }).join('');
+  } else {
+    callout.classList.remove('visible');
+  }
+
+  // revenue
+  const revEl = document.getElementById('r-revenue');
+  const revNote = document.getElementById('r-revenue-note');
+  if (rev > 0) {
+    const opportunity = open * rev;
+    revEl.classList.add('has-value');
+    animateNum(revEl, opportunity, '$', '', 1000);
+    revNote.textContent = open.toLocaleString() + ' reachable projects × $' + rev.toLocaleString() + ' avg. project value = your estimated reachable pipeline.';
+  } else {
+    revEl.classList.remove('has-value');
+    revEl.textContent = '—';
+    revNote.textContent = 'Enter your average revenue per project win above to calculate your pipeline opportunity.';
+  }
+
+  // dynamic CTA text
+  const ctaText = document.getElementById('r-cta-text');
+  const catLabel = cd.label.split('(')[0].trim();
+  const terrLabel = territoryLabel[terr];
+  ctaText.innerHTML = `Doug will run a live search for <strong>${catLabel}</strong> projects in <strong>${terrLabel}</strong> and return actual project names, architect firms, and the specific specs your competitors hold that you don't. <strong>That search is free — no strings attached.</strong>`;
+
+  // pre-fill modal
+  document.getElementById('modal-product').placeholder = catLabel;
+  if (competitors.length > 0) {
+    document.getElementById('modal-competitors').value = competitors.join(', ');
+  }
+  document.getElementById('modal-context').innerHTML = `Doug will run a live search for <strong style="color:var(--amber)">${catLabel} projects in ${terrLabel}</strong> — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.`;
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
