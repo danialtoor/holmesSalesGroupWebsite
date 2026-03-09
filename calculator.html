@@ -11,7 +11,13 @@
 <meta property="og:url" content="https://holmessalesgroup.com/calculator.html">
 <meta property="og:title" content="Spec Gap Calculator — Holmes Sales Group">
 <meta property="og:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory — results update in real time.">
-<meta property="og:image" content="https://holmessalesgroup.com/og-image.jpg">
+<meta property="og:image" content="https://holmessalesgroup.com/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spec Gap Calculator — Holmes Sales Group">
+<meta name="twitter:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory — results update in real time.">
+<meta name="twitter:image" content="https://holmessalesgroup.com/og-image.png">
 
 <!-- Canonical -->
 <link rel="canonical" href="https://holmessalesgroup.com/calculator.html">
@@ -19,6 +25,8 @@
 <!-- Favicon -->
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="calculator.css">
@@ -236,16 +244,17 @@
     <div class="modal-context" id="modal-context">
       Doug will run a live search in Dodge Construction and ConstructConnect for your category and territory — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.
     </div>
-    <form class="form-wrap" onsubmit="return false;">
+    <form class="form-wrap" data-lead-form data-form-id="calculator-modal" novalidate>
       <div class="form-row">
-        <div><label>First Name</label><input type="text" placeholder="John"></div>
-        <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        <div><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+        <div><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"></div>
       </div>
-      <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
-      <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
-      <div><label>What Product Do You Manufacture?</label><input type="text" id="modal-product" placeholder="e.g. Air barriers, cladding systems…"></div>
-      <div><label>Who Are Your Top Competitors?</label><input type="text" id="modal-competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
-      <div><label>Anything Else?</label><textarea placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <div><label>Company / Manufacturer</label><input type="text" name="company" placeholder="Your Company Name"></div>
+      <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
+      <div><label>What Product Do You Manufacture?</label><input type="text" id="modal-product" name="product" placeholder="e.g. Air barriers, cladding systems…" required></div>
+      <div><label>Who Are Your Top Competitors?</label><input type="text" id="modal-competitors" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+      <div><label>Anything Else?</label><textarea name="message" placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <div class="form-status" aria-live="polite"></div>
       <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
     </form>
   </div>
@@ -400,6 +409,68 @@ function closeModal() {
 function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_term: params.get('utm_term') || '',
+    utm_content: params.get('utm_content') || ''
+  };
+}
+function setFormStatus(form, message, type) {
+  const statusEl = form.querySelector('.form-status');
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.classList.remove('is-success', 'is-error');
+  if (type) statusEl.classList.add(type);
+}
+function bindLeadForm(form) {
+  const submitBtn = form.querySelector('.form-submit');
+  const defaultBtnText = submitBtn ? submitBtn.textContent : 'Submit';
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      setFormStatus(form, 'Please fill in the required fields before submitting.', 'is-error');
+      form.reportValidity();
+      return;
+    }
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+    payload.form_id = form.getAttribute('data-form-id') || 'unknown';
+    payload.source_page = window.location.pathname;
+    payload.source_url = window.location.href;
+    payload.submitted_at = new Date().toISOString();
+    Object.assign(payload, getUtmParams());
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+    setFormStatus(form, '', '');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error('Form submit failed');
+      setFormStatus(form, 'Thanks. Doug will be in touch shortly.', 'is-success');
+      form.reset();
+      closeModal();
+    } catch (error) {
+      setFormStatus(form, 'Submission failed. Please email info@holmessalesgroup.com.', 'is-error');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = defaultBtnText;
+      }
+    }
+  });
+}
+document.querySelectorAll('form[data-lead-form]').forEach(bindLeadForm);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
