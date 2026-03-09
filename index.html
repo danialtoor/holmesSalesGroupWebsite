@@ -3,7 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holmes Sales Group — Get Your Product in the Spec</title>
+<title>Holmes Sales Group — Building Product Specification | Chicago & Nationwide</title>
+<meta name="description" content="Holmes Sales Group helps building product manufacturers get specified by architects — before the bid window closes. 25+ years experience. CSI certified. Chicagoland-based, nationwide reach.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://holmessalesgroup.com/">
+<meta property="og:title" content="Holmes Sales Group — Get Your Product in the Spec">
+<meta property="og:description" content="Architects pick the products. Construction documents lock in the brands. Holmes Sales Group gets your product into those specs — before the bid window closes.">
+<meta property="og:image" content="https://holmessalesgroup.com/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Holmes Sales Group — Get Your Product in the Spec">
+<meta name="twitter:description" content="Architects pick the products. Construction documents lock in the brands. Holmes Sales Group gets your product into those specs — before the bid window closes.">
+<meta name="twitter:image" content="https://holmessalesgroup.com/og-image.png">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://holmessalesgroup.com/">
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<!-- Schema.org: ProfessionalService -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Holmes Sales Group",
+  "description": "Building product specification firm helping manufacturers get their products into architectural construction documents. CSI certified. 25+ years experience.",
+  "url": "https://holmessalesgroup.com",
+  "email": "info@holmessalesgroup.com",
+  "areaServed": "United States",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Chicago",
+    "addressRegion": "IL",
+    "addressCountry": "US"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Doug Holmes"
+  },
+  "knowsAbout": ["building product specification", "architectural specifications", "CSI MasterFormat", "construction documents", "A&D outreach"]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="index.css">
@@ -193,7 +240,7 @@
           <p>CDT <em>certified by the Construction Specifications Institute</em>, Holmes Sales Group was launched to serve manufacturers with strong products that are losing specs to bigger, better-resourced competitors.</p>
         </div>
         <div class="about-dodge">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Sed do eiusmod</strong> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. <strong>Blandit massa.</strong>
+          Project pipeline is sourced through <strong>Dodge Construction</strong> and <strong>ConstructConnect</strong> — the same platforms used by the largest spec reps in the country. Every engagement starts with a live search against real active projects, not estimates or guesswork.
         </div>
       </div>
       <div class="reveal reveal-delay-1">
@@ -256,16 +303,17 @@
         <div class="contact-detail"><div class="icon">📍</div> Chicagoland-based · Nationwide reach</div>
       </div>
       <div class="reveal">
-        <form class="form-wrap" onsubmit="return false;">
+        <form class="form-wrap" data-lead-form data-form-id="index-contact" novalidate>
           <div class="form-row">
-            <div><label>First Name</label><input type="text" placeholder="John"></div>
-            <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+            <div><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+            <div><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"></div>
           </div>
-          <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
-          <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
-          <div><label>What Product Do You Manufacture?</label><input type="text" placeholder="e.g. Air barriers, cladding systems, HVAC components…"></div>
-          <div><label>Who Are Your Top Competitors?</label><input type="text" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
-          <div><label>Anything Else?</label><textarea placeholder="Tell us about your product, the markets you're targeting, or where you're hitting friction…"></textarea></div>
+          <div><label>Company / Manufacturer</label><input type="text" name="company" placeholder="Your Company Name"></div>
+          <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
+          <div><label>What Product Do You Manufacture?</label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
+          <div><label>Who Are Your Top Competitors?</label><input type="text" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+          <div><label>Anything Else?</label><textarea name="message" placeholder="Tell us about your product, the markets you're targeting, or where you're hitting friction…"></textarea></div>
+          <div class="form-status" aria-live="polite"></div>
           <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
         </form>
       </div>
@@ -294,16 +342,17 @@
     <div class="modal-eyebrow">🔍 Free Competitive Audit</div>
     <h3>Let's See Where You're Missing in the Spec.</h3>
     <p class="modal-sub">Tell me your product and your top competitors. I'll run them through Dodge Construction and ConstructConnect and show you exactly where they're getting specified — and where you're not. No cost, no commitment.</p>
-    <form class="form-wrap" onsubmit="return false;">
+    <form class="form-wrap" data-lead-form data-form-id="index-modal" novalidate>
       <div class="form-row">
-        <div><label>First Name</label><input type="text" placeholder="John"></div>
-        <div><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        <div><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+        <div><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"></div>
       </div>
-      <div><label>Company / Manufacturer</label><input type="text" placeholder="Your Company Name"></div>
-      <div><label>Email</label><input type="email" placeholder="john@company.com"></div>
-      <div><label>What Product Do You Manufacture?</label><input type="text" placeholder="e.g. Air barriers, cladding systems, HVAC components…"></div>
-      <div><label>Who Are Your Top Competitors?</label><input type="text" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
-      <div><label>Anything Else?</label><textarea placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <div><label>Company / Manufacturer</label><input type="text" name="company" placeholder="Your Company Name"></div>
+      <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
+      <div><label>What Product Do You Manufacture?</label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
+      <div><label>Who Are Your Top Competitors?</label><input type="text" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+      <div><label>Anything Else?</label><textarea name="message" placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
+      <div class="form-status" aria-live="polite"></div>
       <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
     </form>
   </div>
@@ -326,6 +375,68 @@ function closeModal() {
 function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_term: params.get('utm_term') || '',
+    utm_content: params.get('utm_content') || ''
+  };
+}
+function setFormStatus(form, message, type) {
+  const statusEl = form.querySelector('.form-status');
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.classList.remove('is-success', 'is-error');
+  if (type) statusEl.classList.add(type);
+}
+function bindLeadForm(form) {
+  const submitBtn = form.querySelector('.form-submit');
+  const defaultBtnText = submitBtn ? submitBtn.textContent : 'Submit';
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      setFormStatus(form, 'Please fill in the required fields before submitting.', 'is-error');
+      form.reportValidity();
+      return;
+    }
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+    payload.form_id = form.getAttribute('data-form-id') || 'unknown';
+    payload.source_page = window.location.pathname;
+    payload.source_url = window.location.href;
+    payload.submitted_at = new Date().toISOString();
+    Object.assign(payload, getUtmParams());
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+    setFormStatus(form, '', '');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error('Form submit failed');
+      setFormStatus(form, 'Thanks. Doug will be in touch shortly.', 'is-success');
+      form.reset();
+      if (payload.form_id.includes('modal')) closeModal();
+    } catch (error) {
+      setFormStatus(form, 'Submission failed. Please email info@holmessalesgroup.com.', 'is-error');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = defaultBtnText;
+      }
+    }
+  });
+}
+document.querySelectorAll('form[data-lead-form]').forEach(bindLeadForm);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
