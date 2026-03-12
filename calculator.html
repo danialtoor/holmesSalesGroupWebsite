@@ -48,7 +48,7 @@
   <div class="calc-hero-inner">
     <!-- <div class="calc-eyebrow"><span></span> Interactive Tool</div> -->
     <h1>The <em>Spec Gap</em><br>Calculator</h1>
-    <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit Doug runs shows actual project names and architect firms — this is the starting picture.</strong></p>
+    <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit HSG runs shows actual project names and architect firms — this is the starting picture.</strong></p>
   </div>
 </div>
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="divider"></div>
-    <div class="disclaimer">Estimates reflect typical active project volumes by division and territory based on Doug Holmes's 25+ years working Dodge Construction and ConstructConnect. The real audit shows actual project names.</div>
+    <div class="disclaimer">Estimates reflect typical active project volumes by division and territory based on HSG's 25+ years of experience. The real audit shows actual project names.</div>
   </div>
 
   <!-- OUTPUT PANEL -->
@@ -157,7 +157,7 @@
           <div class="stat-hero-num" id="r-total">—</div>
           <div class="stat-hero-unit">estimated active projects in your category &amp; territory</div>
         </div>
-        <div class="stat-hero-sub" id="r-sub">— projects tracked in Dodge + ConstructConnect</div>
+        <div class="stat-hero-sub" id="r-sub">— projects tracked</div>
 
         <!-- buckets -->
         <div class="buckets">
@@ -172,7 +172,7 @@
           <div class="bucket locked">
             <div class="bucket-left">
               <div class="bucket-label">Likely Locked</div>
-              <div class="bucket-desc">Dominant brands already hold all slots — extremely difficult to displace without early relationship</div>
+              <div class="bucket-desc">Dominant brands already hold all slots, extremely difficult to displace without early relationship</div>
               <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-locked"></div></div></div>
             </div>
             <div class="bucket-num" id="r-locked">—</div>
@@ -180,7 +180,7 @@
           <div class="bucket competitor">
             <div class="bucket-left">
               <div class="bucket-label">Competitor Stronghold</div>
-              <div class="bucket-desc">Projects where your named competitors are likely specified — you are not</div>
+              <div class="bucket-desc">Projects where your named competitors are likely specified, and you are not</div>
               <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-comp"></div></div></div>
             </div>
             <div class="bucket-num" id="r-comp">—</div>
@@ -207,8 +207,8 @@
 
         <!-- CTA -->
         <div class="report-cta">
-          <div class="report-cta-text" id="r-cta-text">Doug will run a live search for your category in your territory and return <strong>actual project names, architect firms, and the specific specs your competitors hold</strong>. That search is free — no strings attached.</div>
-          <button class="cta-btn" onclick="openModal()">Get the Real Numbers from Doug →</button>
+          <div class="report-cta-text" id="r-cta-text">HSG will run a live search for your category in your territory and return <strong>actual project names, architect firms, and the specific specs your competitors hold</strong>. That search is free with no strings attached.</div>
+          <button class="cta-btn" onclick="openModal()">Get the Real Numbers from HSG →</button>
         </div>
       </div>
     </div>
@@ -223,12 +223,12 @@
       <div class="info-card">
         <div class="info-card-icon">🔍</div>
         <div class="info-card-title">Real Search, Free</div>
-        <div class="info-card-text">Doug runs actual searches in Dodge and ConstructConnect. You get real project names, not estimates.</div>
+        <div class="info-card-text">HSG runs actual searches and you get real project names, not estimates.</div>
       </div>
       <div class="info-card">
         <div class="info-card-icon">🏗️</div>
         <div class="info-card-title">Not Every Product Fits</div>
-        <div class="info-card-text">If the pipeline isn't there for your product, Doug will tell you that upfront. No pitch, no pressure.</div>
+        <div class="info-card-text">If the pipeline isn't there for your product HSG will tell you that upfront. No pitch, no pressure.</div>
       </div>
     </div>
 
@@ -242,7 +242,7 @@
     <div class="modal-eyebrow">🔍 Free Competitive Audit</div>
     <h3>Let's See the Real Numbers.</h3>
     <div class="modal-context" id="modal-context">
-      Doug will run a live search in Dodge Construction and ConstructConnect for your category and territory — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.
+      HSG will run a live search for your category and territory returning actual project names, architect firms, and the specific specs your competitors hold that you don't.
     </div>
     <form class="form-wrap" data-lead-form data-form-id="calculator-modal" novalidate>
       <div class="form-row">
@@ -256,7 +256,7 @@
       <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
       <div><label>Anything Else?</label><textarea name="message" placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
       <div class="form-status" aria-live="polite"></div>
-      <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+      <button type="submit" class="form-submit">Send and Let's Get You in the Spec →</button>
     </form>
   </div>
 </div>
@@ -276,10 +276,10 @@ const categoryData = {
   'hvac':         { label: 'HVAC Components (Div 23)', base: 220, openRate: 0.24, lockedRate: 0.52, compRate: 0.66, insight: 'HVAC specs involve multiple sub-categories. A single project win can represent substantial unit volume across an entire mechanical system.' },
   'flooring':     { label: 'Flooring Systems (Div 09)', base: 200, openRate: 0.30, lockedRate: 0.45, compRate: 0.60, insight: 'Flooring specs are written early and rarely changed. Architects default to brands they\'ve specified before — breaking in requires samples, comparison data, and A&D firm presence.' },
   'ceiling':      { label: 'Acoustic Ceiling (Div 09)', base: 160, openRate: 0.26, lockedRate: 0.50, compRate: 0.68, insight: 'Armstrong and USG dominate most ceiling specs. Competitors with equivalent or superior performance consistently lose specs they never knew existed.' },
-  'partitions':   { label: 'Operable Partitions (Div 10)', base: 90, openRate: 0.38, lockedRate: 0.35, compRate: 0.52, insight: 'Operable partition specs are highly architect-influenced and project-specific. Doug has direct track record winning specs at Nexus Park (Perkins Will), Metro State University, and Forest Hills Elementary.' },
+  'partitions':   { label: 'Operable Partitions (Div 10)', base: 90, openRate: 0.38, lockedRate: 0.35, compRate: 0.52, insight: 'Operable partition specs are highly architect-influenced and project-specific. HSG has direct track record winning specs at Nexus Park (Perkins Will), Metro State University, and Forest Hills Elementary.' },
   'plumbing':     { label: 'Plumbing Products (Div 22)', base: 175, openRate: 0.27, lockedRate: 0.46, compRate: 0.61, insight: 'Plumbing specs are written by MEP engineers, requiring a different outreach approach. Volume per project is high — each spec win is meaningfully valuable.' },
   'structural':   { label: 'Structural / Masonry (Div 03–05)', base: 130, openRate: 0.22, lockedRate: 0.55, compRate: 0.57, insight: 'Structural specs are set early and require engineer of record sign-off. Entry requires detailed code compliance documentation presented convincingly before design development.' },
-  'hardware':     { label: 'Architectural Hardware (Div 08)', base: 120, openRate: 0.33, lockedRate: 0.40, compRate: 0.55, insight: 'Architectural hardware is specified on nearly every commercial and institutional project. Doug has direct experience winning hardware specs at Hamburger University (Gensler Chicago).' },
+  'hardware':     { label: 'Architectural Hardware (Div 08)', base: 120, openRate: 0.33, lockedRate: 0.40, compRate: 0.55, insight: 'Architectural hardware is specified on nearly every commercial and institutional project. HSG has direct experience winning hardware specs at Hamburger University (Gensler Chicago).' },
   'electrical':   { label: 'Electrical / Lighting (Div 26)', base: 190, openRate: 0.25, lockedRate: 0.50, compRate: 0.63, insight: 'Electrical specs are written by electrical engineers and are highly brand-specific. Early outreach before design development is critical — most specs are locked months before bid.' }
 };
 
@@ -395,14 +395,14 @@ function update() {
   const ctaText = document.getElementById('r-cta-text');
   const catLabel = cd.label.split('(')[0].trim();
   const terrLabel = territoryLabel[terr];
-  ctaText.innerHTML = `Doug will run a live search for <strong>${catLabel}</strong> projects in <strong>${terrLabel}</strong> and return actual project names, architect firms, and the specific specs your competitors hold that you don't. <strong>That search is free — no strings attached.</strong>`;
+  ctaText.innerHTML = `HSG will run a live search for <strong>${catLabel}</strong> projects in <strong>${terrLabel}</strong> and return actual project names, architect firms, and the specific specs your competitors hold that you don't. <strong>That search is free — no strings attached.</strong>`;
 
   // pre-fill modal
   document.getElementById('modal-product').placeholder = catLabel;
   if (competitors.length > 0) {
     document.getElementById('modal-competitors').value = competitors.join(', ');
   }
-  document.getElementById('modal-context').innerHTML = `Doug will run a live search for <strong style="color:var(--amber)">${catLabel} projects in ${terrLabel}</strong> — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.`;
+  document.getElementById('modal-context').innerHTML = `HSG will run a live search for <strong style="color:var(--amber)">${catLabel} projects in ${terrLabel}</strong> — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.`;
 }
 
 // ── MODAL ──
@@ -465,7 +465,7 @@ function bindLeadForm(form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Form submit failed');
-      setFormStatus(form, 'Thanks. Doug will be in touch shortly.', 'is-success');
+      setFormStatus(form, 'Thanks. HSG will be in touch shortly.', 'is-success');
       form.reset();
       closeModal();
     } catch (error) {
