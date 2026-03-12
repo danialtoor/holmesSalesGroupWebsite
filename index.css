@@ -210,7 +210,7 @@ footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: c
   .cred-label { font-size: 0.65rem; line-height: 1.3; }
 }
 
-/* SPEC TIMELINE — VERTICAL ON MOBILE */
+/* SPEC TIMELINE, VERTICAL ON MOBILE */
 @media (max-width: 640px) {
   .spec-timeline-wrap { overflow-x: unset; }
   .spec-timeline { flex-direction: column; min-width: unset; gap: 0; }
@@ -222,7 +222,7 @@ footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: c
   .spec-step-desc { grid-column: 2; grid-row: 2; align-self: start; text-align: left; }
 }
 
-/* PROJECTS TABLE — MOBILE CARDS */
+/* PROJECTS TABLE, MOBILE CARDS */
 @media (max-width: 640px) {
   .projects-table thead { display: none; }
   .projects-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }

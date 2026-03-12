@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spec Gap Calculator — Holmes Sales Group</title>
+<title>Spec Gap Calculator, Holmes Sales Group</title>
 <meta name="description" content="Estimate how many projects your competitors are winning that you're not. The Spec Gap Calculator from Holmes Sales Group shows your estimated architectural specification pipeline in seconds.">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://holmessalesgroup.com/calculator.html">
-<meta property="og:title" content="Spec Gap Calculator — Holmes Sales Group">
-<meta property="og:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory — results update in real time.">
+<meta property="og:title" content="Spec Gap Calculator, Holmes Sales Group">
+<meta property="og:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory, results update in real time.">
 <meta property="og:image" content="https://holmessalesgroup.com/og-image.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Spec Gap Calculator — Holmes Sales Group">
-<meta name="twitter:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory — results update in real time.">
+<meta name="twitter:title" content="Spec Gap Calculator, Holmes Sales Group">
+<meta name="twitter:description" content="See how many projects your competitors are getting specified on that you're missing. Enter your product category and territory, results update in real time.">
 <meta name="twitter:image" content="https://holmessalesgroup.com/og-image.png">
 
 <!-- Canonical -->
@@ -48,7 +48,7 @@
   <div class="calc-hero-inner">
     <!-- <div class="calc-eyebrow"><span></span> Interactive Tool</div> -->
     <h1>The <em>Spec Gap</em><br>Calculator</h1>
-    <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit HSG runs shows actual project names and architect firms — this is the starting picture.</strong></p>
+    <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit HSG runs shows actual project names and architect firms, this is the starting picture.</strong></p>
   </div>
 </div>
 
@@ -147,17 +147,17 @@
     <!-- report card -->
     <div class="report-card" id="report-card">
       <div class="report-header">
-        <div class="report-header-label">Estimated Spec Gap Report — <span id="rh-label">—</span></div>
-        <div class="report-timestamp" id="rh-time">—</div>
+        <div class="report-header-label">Estimated Spec Gap Report, <span id="rh-label">,</span></div>
+        <div class="report-timestamp" id="rh-time">,</div>
       </div>
       <div class="report-body">
 
         <!-- big number -->
         <div class="stat-hero">
-          <div class="stat-hero-num" id="r-total">—</div>
+          <div class="stat-hero-num" id="r-total">,</div>
           <div class="stat-hero-unit">estimated active projects in your category &amp; territory</div>
         </div>
-        <div class="stat-hero-sub" id="r-sub">— projects tracked</div>
+        <div class="stat-hero-sub" id="r-sub">, projects tracked</div>
 
         <!-- buckets -->
         <div class="buckets">
@@ -167,7 +167,7 @@
               <div class="bucket-desc">Projects where a spec slot is likely open and architect outreach could get you added</div>
               <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-open"></div></div></div>
             </div>
-            <div class="bucket-num" id="r-open">—</div>
+            <div class="bucket-num" id="r-open">,</div>
           </div>
           <div class="bucket locked">
             <div class="bucket-left">
@@ -175,7 +175,7 @@
               <div class="bucket-desc">Dominant brands already hold all slots, extremely difficult to displace without early relationship</div>
               <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-locked"></div></div></div>
             </div>
-            <div class="bucket-num" id="r-locked">—</div>
+            <div class="bucket-num" id="r-locked">,</div>
           </div>
           <div class="bucket competitor">
             <div class="bucket-left">
@@ -183,7 +183,7 @@
               <div class="bucket-desc">Projects where your named competitors are likely specified, and you are not</div>
               <div class="bucket-bar-wrap"><div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-comp"></div></div></div>
             </div>
-            <div class="bucket-num" id="r-comp">—</div>
+            <div class="bucket-num" id="r-comp">,</div>
           </div>
         </div>
 
@@ -199,7 +199,7 @@
         <div class="revenue-block">
           <div class="revenue-label">Estimated Reachable Revenue Opportunity</div>
           <div class="revenue-row">
-            <div class="revenue-num" id="r-revenue">—</div>
+            <div class="revenue-num" id="r-revenue">,</div>
             <div class="revenue-qualifier">based on your project value input</div>
           </div>
           <div class="revenue-note" id="r-revenue-note">Enter your average revenue per project win above to calculate your pipeline opportunity.</div>
@@ -274,13 +274,13 @@ const categoryData = {
   'air-barrier':  { label: 'Air Barriers (Div 07)', base: 180, openRate: 0.28, lockedRate: 0.48, compRate: 0.62, insight: 'Air barrier specs are dominated by DuPont Tyvek and 3M in most markets. A single spec win typically goes on an entire building envelope.' },
   'cladding':     { label: 'Cladding / ACM Panels (Div 07)', base: 140, openRate: 0.32, lockedRate: 0.42, compRate: 0.58, insight: 'Cladding specs are locked early in schematic design. Gensler and Perkins Will have preferred vendor lists that require direct technical advocacy to break into.' },
   'hvac':         { label: 'HVAC Components (Div 23)', base: 220, openRate: 0.24, lockedRate: 0.52, compRate: 0.66, insight: 'HVAC specs involve multiple sub-categories. A single project win can represent substantial unit volume across an entire mechanical system.' },
-  'flooring':     { label: 'Flooring Systems (Div 09)', base: 200, openRate: 0.30, lockedRate: 0.45, compRate: 0.60, insight: 'Flooring specs are written early and rarely changed. Architects default to brands they\'ve specified before — breaking in requires samples, comparison data, and A&D firm presence.' },
+  'flooring':     { label: 'Flooring Systems (Div 09)', base: 200, openRate: 0.30, lockedRate: 0.45, compRate: 0.60, insight: 'Flooring specs are written early and rarely changed. Architects default to brands they\'ve specified before, breaking in requires samples, comparison data, and A&D firm presence.' },
   'ceiling':      { label: 'Acoustic Ceiling (Div 09)', base: 160, openRate: 0.26, lockedRate: 0.50, compRate: 0.68, insight: 'Armstrong and USG dominate most ceiling specs. Competitors with equivalent or superior performance consistently lose specs they never knew existed.' },
   'partitions':   { label: 'Operable Partitions (Div 10)', base: 90, openRate: 0.38, lockedRate: 0.35, compRate: 0.52, insight: 'Operable partition specs are highly architect-influenced and project-specific. HSG has direct track record winning specs at Nexus Park (Perkins Will), Metro State University, and Forest Hills Elementary.' },
-  'plumbing':     { label: 'Plumbing Products (Div 22)', base: 175, openRate: 0.27, lockedRate: 0.46, compRate: 0.61, insight: 'Plumbing specs are written by MEP engineers, requiring a different outreach approach. Volume per project is high — each spec win is meaningfully valuable.' },
+  'plumbing':     { label: 'Plumbing Products (Div 22)', base: 175, openRate: 0.27, lockedRate: 0.46, compRate: 0.61, insight: 'Plumbing specs are written by MEP engineers, requiring a different outreach approach. Volume per project is high, each spec win is meaningfully valuable.' },
   'structural':   { label: 'Structural / Masonry (Div 03–05)', base: 130, openRate: 0.22, lockedRate: 0.55, compRate: 0.57, insight: 'Structural specs are set early and require engineer of record sign-off. Entry requires detailed code compliance documentation presented convincingly before design development.' },
   'hardware':     { label: 'Architectural Hardware (Div 08)', base: 120, openRate: 0.33, lockedRate: 0.40, compRate: 0.55, insight: 'Architectural hardware is specified on nearly every commercial and institutional project. HSG has direct experience winning hardware specs at Hamburger University (Gensler Chicago).' },
-  'electrical':   { label: 'Electrical / Lighting (Div 26)', base: 190, openRate: 0.25, lockedRate: 0.50, compRate: 0.63, insight: 'Electrical specs are written by electrical engineers and are highly brand-specific. Early outreach before design development is critical — most specs are locked months before bid.' }
+  'electrical':   { label: 'Electrical / Lighting (Div 26)', base: 190, openRate: 0.25, lockedRate: 0.50, compRate: 0.63, insight: 'Electrical specs are written by electrical engineers and are highly brand-specific. Early outreach before design development is critical, most specs are locked months before bid.' }
 };
 
 const territoryMult = {
@@ -371,7 +371,7 @@ function update() {
     callout.classList.add('visible');
     compList.innerHTML = competitors.map(c => {
       const pct = Math.round(55 + Math.random() * 30);
-      return `<li><strong style="color:rgba(255,255,255,0.75)">${c}</strong>&nbsp;— estimated present in ~${pct}% of specs in this market</li>`;
+      return `<li><strong style="color:rgba(255,255,255,0.75)">${c}</strong>&nbsp;, estimated present in ~${pct}% of specs in this market</li>`;
     }).join('');
   } else {
     callout.classList.remove('visible');
@@ -387,7 +387,7 @@ function update() {
     revNote.textContent = open.toLocaleString() + ' reachable projects × $' + rev.toLocaleString() + ' avg. project value = your estimated reachable pipeline.';
   } else {
     revEl.classList.remove('has-value');
-    revEl.textContent = '—';
+    revEl.textContent = ',';
     revNote.textContent = 'Enter your average revenue per project win above to calculate your pipeline opportunity.';
   }
 
@@ -395,14 +395,14 @@ function update() {
   const ctaText = document.getElementById('r-cta-text');
   const catLabel = cd.label.split('(')[0].trim();
   const terrLabel = territoryLabel[terr];
-  ctaText.innerHTML = `HSG will run a live search for <strong>${catLabel}</strong> projects in <strong>${terrLabel}</strong> and return actual project names, architect firms, and the specific specs your competitors hold that you don't. <strong>That search is free — no strings attached.</strong>`;
+  ctaText.innerHTML = `HSG will run a live search for <strong>${catLabel}</strong> projects in <strong>${terrLabel}</strong> and return actual project names, architect firms, and the specific specs your competitors hold that you don't. <strong>That search is free, no strings attached.</strong>`;
 
   // pre-fill modal
   document.getElementById('modal-product').placeholder = catLabel;
   if (competitors.length > 0) {
     document.getElementById('modal-competitors').value = competitors.join(', ');
   }
-  document.getElementById('modal-context').innerHTML = `HSG will run a live search for <strong style="color:var(--amber)">${catLabel} projects in ${terrLabel}</strong> — returning actual project names, architect firms, and the specific specs your competitors hold that you don't.`;
+  document.getElementById('modal-context').innerHTML = `HSG will run a live search for <strong style="color:var(--amber)">${catLabel} projects in ${terrLabel}</strong>, returning actual project names, architect firms, and the specific specs your competitors hold that you don't.`;
 }
 
 // ── MODAL ──
