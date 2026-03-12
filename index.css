@@ -12,7 +12,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; a
 .nav-cta:hover { background: var(--amber-light) !important; }
 
 /* HERO */
-.hero { min-height: 100vh; background: linear-gradient(to right, rgba(10,16,22,0.88) 0%, rgba(10,16,22,0.65) 55%, rgba(10,16,22,0.35) 100%), url('images/hero-images/crane.avif') center/cover no-repeat; display: flex; align-items: center; position: relative; overflow: hidden; padding: 0 5%; }
+.hero { min-height: 100vh; background: linear-gradient(to right, rgba(10,16,22,0.88) 0%, rgba(10,16,22,0.65) 55%, rgba(10,16,22,0.35) 100%), url('images/hero-images/craneNew.jpeg') center/120% no-repeat; display: flex; align-items: center; position: relative; overflow: hidden; padding: 0 5%; }
 .hero-blueprint { display: none; }
 .hero-glow { position: absolute; top: -500px; right: -500px; width: 1000px; height: 1000px; border-radius: 50%; background: radial-gradient(circle, rgba(212,131,26,0.45) 0%, transparent 60%); pointer-events: none; }
 .hero-content { max-width: 1100px; width: 100%; margin: 0 auto; padding-top: 80px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: end; }
@@ -21,7 +21,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; a
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.4rem, 6vw, 6.8rem); line-height: 0.92; letter-spacing: 0.03em; color: var(--white); margin-bottom: 24px; text-shadow: 0 2px 16px rgba(0,0,0,0.6); }
 h1 .accent { color: var(--amber); }
-h1 .thin { color: rgba(255,255,255,0.3); }
+h1 .thin { color: rgba(255,255,255,0.6); }
 .hero-desc { color: rgba(255,255,255,0.82); font-size: 0.97rem; line-height: 1.8; font-weight: 300; margin-bottom: 36px; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
 .hero-desc strong { color: rgba(255,255,255,0.85); font-weight: 500; }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
