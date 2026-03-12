@@ -14,7 +14,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; a
 /* HERO */
 .hero { min-height: 100vh; background: var(--ink); display: flex; align-items: center; position: relative; overflow: hidden; padding: 0 5%; }
 .hero-blueprint { position: absolute; inset: 0; background-image: linear-gradient(rgba(30,45,61,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(30,45,61,0.6) 1px, transparent 1px); background-size: 52px 52px; opacity: 0.5; }
-.hero-glow { position: absolute; top: 20%; left: 55%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,131,26,0.15) 0%, transparent 65%); pointer-events: none; }
+.hero-glow { position: absolute; top: -500px; right: -500px; width: 1000px; height: 1000px; border-radius: 50%; background: radial-gradient(circle, rgba(212,131,26,0.45) 0%, transparent 60%); pointer-events: none; }
 .hero-content { max-width: 1100px; width: 100%; margin: 0 auto; padding-top: 80px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: end; }
 .hero-tag { display: inline-flex; align-items: center; gap: 10px; background: rgba(212,131,26,0.12); border: 1px solid rgba(212,131,26,0.3); color: var(--amber-light); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 6px 13px; margin-bottom: 24px; font-weight: 500; }
 .hero-tag span { display: inline-block; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; animation: pulse 2s infinite; }
@@ -29,6 +29,8 @@ h1 .thin { color: rgba(255,255,255,0.3); }
 .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
 .btn-ghost { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: all 0.25s; }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+.btn-outline { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; display: inline-block; transition: all 0.25s; background: transparent; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; }
+.btn-outline:hover { border-color: var(--amber); color: var(--amber); }
 .hero-right { padding-bottom: 8px; animation: fadeUp 1s ease 0.4s both; }
 .hero-quote { border-left: 3px solid var(--amber); padding: 24px; background: rgba(255,255,255,0.03); }
 .hero-quote-text { font-family: 'Lora', serif; font-style: italic; color: rgba(255,255,255,0.75); font-size: 0.97rem; line-height: 1.7; margin-bottom: 12px; }
@@ -139,6 +141,37 @@ footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: c
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
+
+/* TABLE IMAGE LIGHTBOX */
+.img-overlay { position: fixed; inset: 0; z-index: 600; background: rgba(5,10,15,0.95); display: flex; align-items: center; justify-content: center; padding: 48px; opacity: 0; pointer-events: none; transition: opacity 0.3s; cursor: zoom-out; }
+.img-overlay.open { opacity: 1; pointer-events: all; }
+.img-container { position: relative; width: min(900px, 90vw); cursor: default; }
+.img-close { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.45); border: none; cursor: pointer; color: #e74c3c; font-size: 2rem; line-height: 1; transition: color 0.2s, background 0.2s; padding: 4px 10px; z-index: 1; border-radius: 2px; }
+.img-close:hover { color: #ff6b6b; background: rgba(0,0,0,0.7); }
+.img-lightbox { width: 100%; height: 60vh; object-fit: cover; display: block; box-shadow: 0 32px 80px rgba(0,0,0,0.6); }
+
+/* GALLERY MODAL */
+.gallery-overlay { position: fixed; inset: 0; z-index: 600; background: rgba(5,10,15,0.97); display: flex; align-items: stretch; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.gallery-overlay.open { opacity: 1; pointer-events: all; }
+.gallery-modal { width: 100%; display: flex; flex-direction: column; }
+.gallery-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.gallery-label { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.2em; color: var(--amber); }
+.gallery-counter { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.gallery-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.35); font-size: 1.3rem; line-height: 1; transition: color 0.2s; padding: 4px 8px; }
+.gallery-close:hover { color: var(--white); }
+.gallery-main { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; overflow: hidden; }
+.gallery-image-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px 80px; }
+.gallery-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.15s ease; }
+.gallery-img.fading { opacity: 0; }
+.gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.25); font-size: 1.8rem; padding: 24px 20px; transition: color 0.2s; z-index: 10; line-height: 1; }
+.gallery-arrow:hover { color: var(--amber); }
+.gallery-prev { left: 0; }
+.gallery-next { right: 0; }
+.gallery-thumbs { display: flex; gap: 6px; padding: 14px 28px 20px; overflow-x: auto; flex-shrink: 0; scrollbar-width: none; border-top: 1px solid rgba(255,255,255,0.06); justify-content: center; flex-wrap: wrap; }
+.gallery-thumbs::-webkit-scrollbar { display: none; }
+.gallery-thumb { width: 56px; height: 56px; object-fit: cover; cursor: pointer; opacity: 0.3; transition: opacity 0.2s, border-color 0.2s; flex-shrink: 0; border: 1px solid transparent; }
+.gallery-thumb:hover { opacity: 0.65; }
+.gallery-thumb.active { opacity: 1; border-color: var(--amber); }
 
 /* HAMBURGER */
 .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }

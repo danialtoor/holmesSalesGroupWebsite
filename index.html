@@ -93,7 +93,8 @@
       <p class="hero-desc">Architects pick the products. Construction documents lock in the brands. <strong>Holmes Sales Group gets your product into those specs</strong> — before the bid window closes, across every division, anywhere in the US.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="openModal()">Get a Free Spec Audit →</button>
-        <a href="calculator.html" class="btn-ghost">Calculate Your Odds →</a>
+        <!-- <a href="calculator.html" class="btn-ghost">Calculate Your Odds →</a> -->
+        <button class="btn-outline" onclick="openHeroModal()">View Gallery →</button>
       </div>
     </div>
     <div class="hero-right">
@@ -184,49 +185,49 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr onclick="openTableModal(0)">
           <td data-label="Project">Hamburger University / McDonald's Corporation</td>
           <td data-label="Location">Oak Brook, IL</td>
           <td data-label="Architect / GC">Gensler Chicago</td>
           <td data-label="Product Specified"><span class="proj-product">Architectural Hardware</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(1)">
           <td data-label="Project">Nexus Park</td>
           <td data-label="Location">Columbus, IN</td>
           <td data-label="Architect / GC">Perkins Will Chicago</td>
           <td data-label="Product Specified"><span class="proj-product">Operable Partitions</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(2)">
           <td data-label="Project">Bowen Health Care</td>
           <td data-label="Location">Multiple — Indiana</td>
           <td data-label="Architect / GC">MKM Architecture, Ft. Wayne</td>
           <td data-label="Product Specified"><span class="proj-product">Acoustic Ceiling</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(3)">
           <td data-label="Project">R.C. Hinsdale Elementary School</td>
           <td data-label="Location">Edgewood, KY</td>
           <td data-label="Architect / GC">Emboss Design</td>
           <td data-label="Product Specified"><span class="proj-product">ACM Panels</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(4)">
           <td data-label="Project">Gail Borden Public Library</td>
           <td data-label="Location">Elgin, IL</td>
           <td data-label="Architect / GC">Frye Gillian Molinaro Architects</td>
           <td data-label="Product Specified"><span class="proj-product">Operable / Glass Operable Partitions</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(5)">
           <td data-label="Project">Forest Hills Elementary School</td>
           <td data-label="Location">Western Springs, IL</td>
           <td data-label="Architect / GC">FH Paschen, Chicago</td>
           <td data-label="Product Specified"><span class="proj-product">Operable Partitions</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(6)">
           <td data-label="Project">Metro State University</td>
           <td data-label="Location">St. Paul, MN</td>
           <td data-label="Architect / GC">JLG Architects, Minneapolis</td>
           <td data-label="Product Specified"><span class="proj-product">Glass Operable Partitions</span></td>
         </tr>
-        <tr>
+        <tr onclick="openTableModal(7)">
           <td data-label="Project">Kellogg School of Business, Northwestern University</td>
           <td data-label="Location">Evanston, IL</td>
           <td data-label="Architect / GC">KPMP Architects, Toronto, ON</td>
@@ -326,7 +327,7 @@
           <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
           <div><label>Anything Else?</label><textarea name="message" placeholder="Tell us about your product, the markets you're targeting, or where you're hitting friction…"></textarea></div>
           <div class="form-status" aria-live="polite"></div>
-          <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+          <button type="submit" class="form-submit">Let's Get You in the Spec →</button>
         </form>
       </div>
     </div>
@@ -347,6 +348,33 @@
   <div class="footer-copy">© 2025 Holmes Sales Group, Inc. · Building Product Specification · Nationwide</div>
 </footer>
 
+<!-- TABLE IMAGE LIGHTBOX -->
+<div class="img-overlay" id="img-overlay" onclick="closeTableModal()">
+  <div class="img-container" onclick="event.stopPropagation()">
+    <button class="img-close" onclick="closeTableModal()" aria-label="Close">✕</button>
+    <img class="img-lightbox" id="img-lightbox" src="" alt="Project photo">
+  </div>
+</div>
+
+<!-- GALLERY MODAL -->
+<div class="gallery-overlay" id="gallery-overlay" onclick="handleGalleryOverlayClick(event)">
+  <div class="gallery-modal">
+    <div class="gallery-header">
+      <div class="gallery-label">Project Gallery</div>
+      <div class="gallery-counter" id="gallery-counter">1 / 18</div>
+      <button class="gallery-close" onclick="closeHeroModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="gallery-main" id="gallery-main">
+      <button class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="Previous">←</button>
+      <div class="gallery-image-wrap">
+        <img class="gallery-img" id="gallery-img" src="" alt="Project photo">
+      </div>
+      <button class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="Next">→</button>
+    </div>
+    <div class="gallery-thumbs" id="gallery-thumbs"></div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal" role="dialog" aria-modal="true">
@@ -366,7 +394,7 @@
       <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
       <div><label>Anything Else?</label><textarea name="message" placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
       <div class="form-status" aria-live="polite"></div>
-      <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
+      <button type="submit" class="form-submit">Let's Get You in the Spec →</button>
     </form>
   </div>
 </div>
@@ -457,7 +485,113 @@ function bindLeadForm(form) {
   });
 }
 document.querySelectorAll('form[data-lead-form]').forEach(bindLeadForm);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeMenu(); closeHeroModal(); closeTableModal(); }
+  if (document.getElementById('gallery-overlay').classList.contains('open')) {
+    if (e.key === 'ArrowRight') galleryNext();
+    if (e.key === 'ArrowLeft') galleryPrev();
+  }
+});
+
+const tableImages = [
+  'images/table-images/mcdonalds-headquarters-ia-interior-architects-studio-o-a-chicago-illinois-us_dezeen_2364_col_4-852x594.jpg',
+  'images/table-images/NexusPark-Exterior-Park-at-25th-1-scaled.jpg',
+  'images/table-images/bowenHealthCenter.jpg',
+  'images/table-images/RCHinsdaleElemetary.jpg',
+  'images/table-images/GailBorden.jpg',
+  'images/table-images/forestHills.jpg',
+  'images/table-images/metroState.jpg',
+  'images/table-images/kelloggBusinessSchool.jpeg',
+];
+function openTableModal(index) {
+  const src = tableImages[index];
+  if (!src) return;
+  document.getElementById('img-lightbox').src = src;
+  document.getElementById('img-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTableModal() {
+  document.getElementById('img-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+const heroImages = [
+  'images/hero-images/Corflex-MarianKrausPhoto-3web.jpg',
+  'images/hero-images/Corflex-MarianKrausPhoto-4web - Copy (2).jpg',
+  'images/hero-images/Corflex-MarianKrausPhoto-10web - Copy.jpg',
+  'images/hero-images/Corflex-MarianKrausPhoto-13web.jpg',
+  'images/hero-images/Corflex-MarianKrausPhoto-30web.jpg',
+  'images/hero-images/unnamed.jpg',
+  'images/hero-images/unnamed (1).jpg',
+  'images/hero-images/unnamed (2).jpg',
+  'images/hero-images/unnamed (3).jpg',
+  'images/hero-images/unnamed (4).jpg',
+  'images/hero-images/unnamed (5).jpg',
+  'images/hero-images/unnamed (6).jpg',
+  'images/hero-images/unnamed (7).jpg',
+  'images/hero-images/unnamed (8).jpg',
+  'images/hero-images/unnamed (9).jpg',
+  'images/hero-images/unnamed (10).jpg',
+  'images/hero-images/unnamed (11).jpg',
+  'images/hero-images/screws.jpg',
+];
+
+let galleryIndex = 0;
+let galleryTouchStartX = 0;
+
+function openHeroModal() {
+  galleryIndex = 0;
+  buildGalleryThumbs();
+  updateGalleryImage();
+  document.getElementById('gallery-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeHeroModal() {
+  document.getElementById('gallery-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleGalleryOverlayClick(e) {
+  if (e.target === document.getElementById('gallery-overlay')) closeHeroModal();
+}
+function buildGalleryThumbs() {
+  const container = document.getElementById('gallery-thumbs');
+  container.innerHTML = '';
+  heroImages.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+    img.alt = 'Project thumbnail';
+    img.onclick = () => { galleryIndex = i; updateGalleryImage(); };
+    container.appendChild(img);
+  });
+}
+function updateGalleryImage() {
+  const img = document.getElementById('gallery-img');
+  img.classList.add('fading');
+  setTimeout(() => {
+    img.src = heroImages[galleryIndex];
+    img.onload = () => img.classList.remove('fading');
+  }, 150);
+  document.getElementById('gallery-counter').textContent = `${galleryIndex + 1} / ${heroImages.length}`;
+  document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === galleryIndex));
+  const activeThumb = document.querySelectorAll('.gallery-thumb')[galleryIndex];
+  if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+function galleryNext() {
+  galleryIndex = (galleryIndex + 1) % heroImages.length;
+  updateGalleryImage();
+}
+function galleryPrev() {
+  galleryIndex = (galleryIndex - 1 + heroImages.length) % heroImages.length;
+  updateGalleryImage();
+}
+document.getElementById('gallery-main').addEventListener('touchstart', e => {
+  galleryTouchStartX = e.touches[0].clientX;
+});
+document.getElementById('gallery-main').addEventListener('touchend', e => {
+  const diff = galleryTouchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) diff > 0 ? galleryNext() : galleryPrev();
+});
 
 function toggleMenu() {
   document.getElementById('nav-links').classList.toggle('open');
