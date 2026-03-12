@@ -46,7 +46,7 @@
 <!-- HERO BAND -->
 <div class="calc-hero">
   <div class="calc-hero-inner">
-    <div class="calc-eyebrow"><span></span> Interactive Tool</div>
+    <!-- <div class="calc-eyebrow"><span></span> Interactive Tool</div> -->
     <h1>The <em>Spec Gap</em><br>Calculator</h1>
     <p>See how many projects your competitors are winning that you're not. Fill in your product details and watch the numbers update in real time. <strong>The real audit Doug runs shows actual project names and architect firms — this is the starting picture.</strong></p>
   </div>
@@ -253,6 +253,7 @@
       <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
       <div><label>What Product Do You Manufacture?</label><input type="text" id="modal-product" name="product" placeholder="e.g. Air barriers, cladding systems…" required></div>
       <div><label>Who Are Your Top Competitors?</label><input type="text" id="modal-competitors" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
+      <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
       <div><label>Anything Else?</label><textarea name="message" placeholder="Markets you're targeting, where you're hitting friction…"></textarea></div>
       <div class="form-status" aria-live="polite"></div>
       <button type="submit" class="form-submit">Send — Let's Get You in the Spec →</button>
@@ -261,6 +262,13 @@
 </div>
 
 <script>
+document.querySelectorAll('input[name="csi_code"]').forEach(el => {
+  el.addEventListener('input', function () {
+    const digits = this.value.replace(/\D/g, '').slice(0, 6);
+    this.value = digits.match(/.{1,2}/g)?.join(' ') ?? '';
+  });
+});
+
 // ── DATA ──
 const categoryData = {
   'air-barrier':  { label: 'Air Barriers (Div 07)', base: 180, openRate: 0.28, lockedRate: 0.48, compRate: 0.62, insight: 'Air barrier specs are dominated by DuPont Tyvek and 3M in most markets. A single spec win typically goes on an entire building envelope.' },
