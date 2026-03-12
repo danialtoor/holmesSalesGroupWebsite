@@ -64,14 +64,17 @@
     <div class="nav-logo-top">Holmes Sales Group</div>
     <div class="nav-logo-sub">Building Product Specification Specialist</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="#problem">The Reality</a></li>
-    <li><a href="#how-spec-works">The Process</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#about">About HSG</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#problem" onclick="closeMenu()">The Reality</a></li>
+    <li><a href="#how-spec-works" onclick="closeMenu()">The Process</a></li>
+    <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+    <li><a href="#about" onclick="closeMenu()">About HSG</a></li>
+    <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
     <li><button class="nav-cta" onclick="openModal()">Free Audit</button></li>
   </ul>
+  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -122,7 +125,7 @@
       <p><em>Every manufacturer is different, so our approach is never one-size-fits-all.</em></p>
     </div>
     <div class="problem-honest reveal">
-      <div class="problem-honest-text"><strong>Our Approach</strong><br>We believe relationships matter. Trust matters. Follow-through matters.<br>We focus on long-term growth, not quick wins. <strong>When your product is specified, approved, and installed — that's success to us.</strong></div>
+      <div class="problem-honest-text"><strong>Our Approach</strong><br>We believe relationships matter. Trust matters. Follow-through matters. We focus on long-term growth, not quick wins. When your product is specified, approved, and installed that's success to us.</div>
     </div>
   </div>
 </section>
@@ -182,52 +185,52 @@
       </thead>
       <tbody>
         <tr>
-          <td>Hamburger University / McDonald's Corporation</td>
-          <td>Oak Brook, IL</td>
-          <td>Gensler Chicago</td>
-          <td><span class="proj-product">Architectural Hardware</span></td>
+          <td data-label="Project">Hamburger University / McDonald's Corporation</td>
+          <td data-label="Location">Oak Brook, IL</td>
+          <td data-label="Architect / GC">Gensler Chicago</td>
+          <td data-label="Product Specified"><span class="proj-product">Architectural Hardware</span></td>
         </tr>
         <tr>
-          <td>Nexus Park</td>
-          <td>Columbus, IN</td>
-          <td>Perkins Will Chicago</td>
-          <td><span class="proj-product">Operable Partitions</span></td>
+          <td data-label="Project">Nexus Park</td>
+          <td data-label="Location">Columbus, IN</td>
+          <td data-label="Architect / GC">Perkins Will Chicago</td>
+          <td data-label="Product Specified"><span class="proj-product">Operable Partitions</span></td>
         </tr>
         <tr>
-          <td>Bowen Health Care</td>
-          <td>Multiple — Indiana</td>
-          <td>MKM Architecture, Ft. Wayne</td>
-          <td><span class="proj-product">Acoustic Ceiling</span></td>
+          <td data-label="Project">Bowen Health Care</td>
+          <td data-label="Location">Multiple — Indiana</td>
+          <td data-label="Architect / GC">MKM Architecture, Ft. Wayne</td>
+          <td data-label="Product Specified"><span class="proj-product">Acoustic Ceiling</span></td>
         </tr>
         <tr>
-          <td>R.C. Hinsdale Elementary School</td>
-          <td>Edgewood, KY</td>
-          <td>Emboss Design</td>
-          <td><span class="proj-product">ACM Panels</span></td>
+          <td data-label="Project">R.C. Hinsdale Elementary School</td>
+          <td data-label="Location">Edgewood, KY</td>
+          <td data-label="Architect / GC">Emboss Design</td>
+          <td data-label="Product Specified"><span class="proj-product">ACM Panels</span></td>
         </tr>
         <tr>
-          <td>Gail Borden Public Library</td>
-          <td>Elgin, IL</td>
-          <td>Frye Gillian Molinaro Architects</td>
-          <td><span class="proj-product">Operable / Glass Operable Partitions</span></td>
+          <td data-label="Project">Gail Borden Public Library</td>
+          <td data-label="Location">Elgin, IL</td>
+          <td data-label="Architect / GC">Frye Gillian Molinaro Architects</td>
+          <td data-label="Product Specified"><span class="proj-product">Operable / Glass Operable Partitions</span></td>
         </tr>
         <tr>
-          <td>Forest Hills Elementary School</td>
-          <td>Western Springs, IL</td>
-          <td>FH Paschen, Chicago</td>
-          <td><span class="proj-product">Operable Partitions</span></td>
+          <td data-label="Project">Forest Hills Elementary School</td>
+          <td data-label="Location">Western Springs, IL</td>
+          <td data-label="Architect / GC">FH Paschen, Chicago</td>
+          <td data-label="Product Specified"><span class="proj-product">Operable Partitions</span></td>
         </tr>
         <tr>
-          <td>Metro State University</td>
-          <td>St. Paul, MN</td>
-          <td>JLG Architects, Minneapolis</td>
-          <td><span class="proj-product">Glass Operable Partitions</span></td>
+          <td data-label="Project">Metro State University</td>
+          <td data-label="Location">St. Paul, MN</td>
+          <td data-label="Architect / GC">JLG Architects, Minneapolis</td>
+          <td data-label="Product Specified"><span class="proj-product">Glass Operable Partitions</span></td>
         </tr>
         <tr>
-          <td>Kellogg School of Business, Northwestern University</td>
-          <td>Evanston, IL</td>
-          <td>KPMP Architects, Toronto, ON</td>
-          <td><span class="proj-product">Tile Flooring</span></td>
+          <td data-label="Project">Kellogg School of Business, Northwestern University</td>
+          <td data-label="Location">Evanston, IL</td>
+          <td data-label="Architect / GC">KPMP Architects, Toronto, ON</td>
+          <td data-label="Product Specified"><span class="proj-product">Tile Flooring</span></td>
         </tr>
       </tbody>
     </table>
@@ -454,7 +457,16 @@ function bindLeadForm(form) {
   });
 }
 document.querySelectorAll('form[data-lead-form]').forEach(bindLeadForm);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+
+function toggleMenu() {
+  document.getElementById('nav-links').classList.toggle('open');
+  document.getElementById('nav-hamburger').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('nav-hamburger').classList.remove('open');
+}
 </script>
 </body>
 </html>
