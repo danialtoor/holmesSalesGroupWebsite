@@ -21,7 +21,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; a
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.4rem, 6vw, 6.8rem); line-height: 0.92; letter-spacing: 0.03em; color: var(--white); margin-bottom: 24px; text-shadow: 0 2px 16px rgba(0,0,0,0.6); }
 h1 .accent { color: var(--amber); }
-h1 .thin { color: rgba(255,255,255,0.6); }
+h1 .thin { color: rgba(255,255,255,1); }
 .hero-desc { color: rgba(255,255,255,0.82); font-size: 0.97rem; line-height: 1.8; font-weight: 300; margin-bottom: 36px; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
 .hero-desc strong { color: rgba(255,255,255,0.85); font-weight: 500; }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -31,10 +31,10 @@ h1 .thin { color: rgba(255,255,255,0.6); }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
 .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; display: inline-block; transition: all 0.25s; background: transparent; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; }
 .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
-.hero-right { padding-bottom: 8px; animation: fadeUp 1s ease 0.4s both; }
+.hero-right { padding-bottom: 8px; animation: fadeUp 1s ease 0.4s both; align-self: center; }
 .hero-quote { border-left: 3px solid var(--amber); padding: 24px; background: rgba(255,255,255,0.03); }
-.hero-quote-text { font-family: 'Lora', serif; font-style: italic; color: rgba(255,255,255,0.75); font-size: 0.97rem; line-height: 1.7; margin-bottom: 12px; }
-.hero-quote-attr { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); font-weight: 500; }
+.hero-quote-text { font-family: 'Lora', serif; font-style: italic; color: rgba(255,255,255,0.75); font-size: 1.05rem; line-height: 1.7; margin-bottom: 12px; }
+.hero-quote-attr { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); font-weight: 500; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
 
 /* TICKER */

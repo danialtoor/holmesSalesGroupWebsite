@@ -242,7 +242,7 @@
 <section class="about" id="about">
   <div class="inner">
     <div class="eyebrow">About Holmes Sales Group</div>
-    <h2>25 Years. 6 Manufacturers. One Niche.</h2>
+    <h2>25 Years. 100+ Manufacturers. One Niche.</h2>
     <div class="about-grid">
       <div class="reveal">
         <div class="about-bio">
@@ -603,6 +603,108 @@ function closeMenu() {
   document.getElementById('nav-links').classList.remove('open');
   document.getElementById('nav-hamburger').classList.remove('open');
 }
+</script>
+<script>
+  window.addEventListener('load', function() {
+    const h1 = document.querySelector('.hero h1');
+    const segments = [
+      { type: 'text', content: "If You're Not" },
+      { type: 'br' },
+      { type: 'text', content: 'In ' },
+      { type: 'span', content: 'The Spec,', cls: 'accent' },
+      { type: 'br' },
+      { type: 'span', content: "You Can't", cls: 'thin' },
+      { type: 'br' },
+      { type: 'text', content: 'Win The Sale.' },
+    ];
+    h1.style.position = 'relative';
+    h1.style.minHeight = h1.offsetHeight + 'px';
+    h1.innerHTML = '';
+    let segIndex = 0, charIndex = 0, currentNode = null;
+
+    function drawHighlight() {
+      const thinSpan = h1.querySelector('.thin');
+      if (!thinSpan) return;
+      const h1Rect = h1.getBoundingClientRect();
+      const spanRect = thinSpan.getBoundingClientRect();
+      const x = spanRect.left - h1Rect.left - 8;
+      const ht = spanRect.height * 0.75;
+      const y = spanRect.top - h1Rect.top + (spanRect.height - ht) * 0.3;
+      const w = spanRect.width + 22;
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${ht}px;overflow:visible;pointer-events:none;z-index:0;`;
+      const clipId = 'hl-clip-' + Date.now();
+      const defs = document.createElementNS(ns, 'defs');
+      const clipPath = document.createElementNS(ns, 'clipPath');
+      clipPath.setAttribute('id', clipId);
+      const clipRect = document.createElementNS(ns, 'rect');
+      clipRect.setAttribute('x', '-10');
+      clipRect.setAttribute('y', '-10');
+      clipRect.setAttribute('width', '0');
+      clipRect.setAttribute('height', String(ht + 20));
+      clipPath.appendChild(clipRect);
+      defs.appendChild(clipPath);
+      svg.appendChild(defs);
+      const path = document.createElementNS(ns, 'path');
+      const tw = w, th = ht;
+      const d = `M 0,${th*0.02} L ${tw},${th*0.0} L ${tw},${th*1.0} L 0,${th*0.98} Z`;
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'rgba(212,131,26,0.25)');
+      path.setAttribute('clip-path', `url(#${clipId})`);
+      svg.appendChild(path);
+      h1.appendChild(svg);
+      thinSpan.style.position = 'relative';
+      thinSpan.style.zIndex = '1';
+      const targetWidth = tw + 20;
+      const duration = 480;
+      const start = performance.now();
+      function animate(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        clipRect.setAttribute('width', String(eased * targetWidth));
+        if (p < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setTimeout(() => {
+            svg.style.transition = 'opacity 1.4s ease';
+            svg.style.opacity = '0';
+          }, 300);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function typeNext() {
+      if (segIndex >= segments.length) return;
+      const seg = segments[segIndex];
+      if (seg.type === 'br') {
+        h1.appendChild(document.createElement('br'));
+        segIndex++; charIndex = 0;
+        setTimeout(typeNext, 30);
+        return;
+      }
+      if (charIndex === 0) {
+        if (seg.type === 'span') {
+          currentNode = document.createElement('span');
+          currentNode.className = seg.cls;
+          h1.appendChild(currentNode);
+        } else {
+          currentNode = document.createTextNode('');
+          h1.appendChild(currentNode);
+        }
+      }
+      currentNode.textContent += seg.content[charIndex];
+      charIndex++;
+      if (charIndex >= seg.content.length) {
+        const justFinished = segIndex;
+        segIndex++; charIndex = 0; currentNode = null;
+        if (justFinished === 5) setTimeout(drawHighlight, 80);
+      }
+      setTimeout(typeNext, 38);
+    }
+    setTimeout(typeNext, 400);
+  });
 </script>
 </body>
 </html>
