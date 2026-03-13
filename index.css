@@ -3,6 +3,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-event
 
 /* NAV */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: rgba(17,24,32,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,131,26,0.15); }
+.nav-logo { display: flex; align-items: center; gap: 12px; }
 .nav-logo-top { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
 .nav-logo-sub { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); font-weight: 300; }
 .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
