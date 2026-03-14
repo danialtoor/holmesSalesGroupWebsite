@@ -131,6 +131,24 @@ h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem
 .contact-detail { display: flex; align-items: center; gap: 12px; color: #5a6a78; font-size: 0.85rem; margin-bottom: 10px; }
 .contact-detail .icon { width: 30px; height: 30px; background: var(--steel); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
 
+/* WHAT HAPPENS NEXT */
+.contact-next-steps { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--concrete); }
+.next-steps-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); font-weight: 500; margin-bottom: 18px; }
+.next-step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.next-step:last-child { margin-bottom: 0; }
+.next-step-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--amber); line-height: 1.1; min-width: 30px; }
+.next-step-body { font-size: 0.84rem; color: #6a7a88; line-height: 1.65; font-weight: 300; padding-top: 3px; }
+
+/* USA MAP */
+.contact-map-wrap { margin-top: 32px; }
+.map-eyebrow { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); font-weight: 500; margin-bottom: 10px; }
+.map-container { position: relative; line-height: 0; }
+.usa-map-img { width: 100%; height: auto; display: block; filter: brightness(0) opacity(0.1); }
+.map-dot { position: absolute; display: block; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; transform: translate(-50%, -50%); }
+.map-dot::after { content: ''; position: absolute; inset: 0; background: var(--amber); border-radius: 50%; transform-origin: center; animation: dot-ring-pulse 2.8s ease-out infinite; }
+@keyframes dot-ring-pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(4); opacity: 0; } }
+.map-caption { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--mist); margin-top: 8px; line-height: 1.5; }
+
 /* FOOTER */
 footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(212,131,26,0.15); }
 .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--white); }
