@@ -81,7 +81,9 @@ h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem
 .spec-step-desc { font-size: 0.72rem; color: rgba(255,255,255,0.32); line-height: 1.55; font-weight: 300; }
 
 /* PROJECTS */
-.projects { background: var(--ink); }
+.projects { background: var(--ink); position: relative; }
+.projects-bg-overlay { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 0; }
+.projects .inner { position: relative; z-index: 1; }
 .projects h2 { color: var(--white); }
 .projects-intro { color: rgba(255,255,255,0.38); font-size: 0.93rem; line-height: 1.8; font-weight: 300; max-width: 520px; margin-bottom: 40px; }
 .projects-table { width: 100%; border-collapse: collapse; }
