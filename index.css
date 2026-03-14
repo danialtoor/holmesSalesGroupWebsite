@@ -129,12 +129,12 @@ h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem
 .contact { background: var(--fog); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; }
 .contact h2 { color: var(--ink); margin-bottom: 14px; }
-.contact-blurb { color: #6a7a88; font-size: 0.91rem; line-height: 1.8; font-weight: 300; margin-bottom: 28px; }
+.contact-blurb { color: #6a7a88; font-size: 0.91rem; line-height: 1.8; font-weight: 300; margin-bottom: 6px; }
 .contact-detail { display: flex; align-items: center; gap: 12px; color: #5a6a78; font-size: 0.85rem; margin-bottom: 10px; }
 .contact-detail .icon { width: 30px; height: 30px; background: var(--steel); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
 
 /* WHAT HAPPENS NEXT */
-.contact-next-steps { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--concrete); }
+.contact-next-steps { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--concrete); }
 .next-steps-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); font-weight: 500; margin-bottom: 18px; }
 .next-step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
 .next-step:last-child { margin-bottom: 0; }
