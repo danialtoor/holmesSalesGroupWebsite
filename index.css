@@ -30,7 +30,7 @@ h1 .thin { color: rgba(255,255,255,1); }
 .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
 .btn-ghost { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: all 0.25s; }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-.btn-outline { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; display: inline-block; transition: all 0.25s; background: transparent; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; }
+.btn-outline { border: 1px solid rgba(255,255,255,0.6); color: #ffffff; padding: 13px 28px; font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase; display: inline-block; transition: all 0.25s; background: transparent; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; }
 .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
 .hero-right { padding-bottom: 8px; animation: fadeUp 1s ease 0.4s both; align-self: center; }
 .hero-quote { border-left: 3px solid var(--amber); padding: 24px; background: rgba(255,255,255,0.03); }
@@ -130,6 +130,10 @@ h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem
 .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; }
 .contact h2 { color: var(--ink); margin-bottom: 14px; }
 .contact-blurb { color: #6a7a88; font-size: 0.91rem; line-height: 1.8; font-weight: 300; margin-bottom: 6px; }
+.form-direct { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--concrete); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.form-direct span { font-size: 0.9rem; color: #6a7a88; }
+.form-direct a { color: var(--amber); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: opacity 0.2s; }
+.form-direct a:hover { opacity: 0.75; }
 .contact-detail { display: flex; align-items: center; gap: 12px; color: #5a6a78; font-size: 0.85rem; margin-bottom: 10px; }
 .contact-detail .icon { width: 30px; height: 30px; background: var(--steel); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
 
