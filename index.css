@@ -130,7 +130,7 @@ h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem
 .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; }
 .contact h2 { color: var(--ink); margin-bottom: 14px; }
 .contact-blurb { color: #6b8399; font-size: 0.91rem; line-height: 1.8; font-weight: 300; margin-bottom: 6px; }
-.form-direct { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--concrete); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.form-direct { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--concrete); display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .form-direct span { font-size: 0.9rem; color: #6b8399; }
 .form-direct a { color: var(--amber); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: opacity 0.2s; }
 .form-direct a:hover { opacity: 0.75; }
@@ -258,7 +258,7 @@ footer { background: var(--ink); padding: 36px 5%; display: flex; align-items: c
   .projects-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .projects-table td { display: block; padding: 0; color: rgba(255,255,255,0.55); font-size: 0.82rem; line-height: 1.4; }
   .projects-table td + td { margin-top: 6px; }
-  .projects-table td:first-child { color: var(--white); font-weight: 500; font-size: 0.9rem; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .projects-table td:first-child { color: var(--white); font-weight: 500; font-size: 0.9rem; margin-bottom: 6px; display: flex; justify-content: flex-start; align-items: center; gap: 10px; }
   .projects-table td:first-child::after { content: none; }
   .projects-table td::before { content: attr(data-label); display: inline; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-right: 6px; font-weight: 500; }
   .projects-table td:first-child::before { display: none; }
