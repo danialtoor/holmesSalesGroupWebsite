@@ -28,6 +28,7 @@ body { font-family: 'IBM Plex Sans', sans-serif; overflow-x: hidden; }
 .form-wrap { display: flex; flex-direction: column; gap: 13px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-wrap label { display: block; font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6b8399; margin-bottom: 5px; font-weight: 500; }
+.form-wrap label .req { color: #e05252; margin-left: 2px; }
 .form-wrap input, .form-wrap textarea { width: 100%; padding: 11px 13px; background: var(--white); border: 1px solid var(--concrete); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.86rem; color: var(--ink); outline: none; transition: border 0.2s; }
 .form-wrap input:focus, .form-wrap textarea:focus { border-color: var(--amber); }
 .form-wrap textarea { height: 100px; resize: vertical; }

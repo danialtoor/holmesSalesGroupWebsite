@@ -369,15 +369,15 @@
         <form class="form-wrap" data-lead-form data-form-id="index-contact" novalidate>
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-5000px;">
           <div class="form-row">
-            <div><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+            <div><label>First Name<span class="req">*</span></label><input type="text" name="first_name" placeholder="John" required></div>
             <div><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"></div>
           </div>
-          <div><label>Company / Manufacturer</label><input type="text" name="company" placeholder="Your Company Name"></div>
+          <div><label>Company / Manufacturer<span class="req">*</span></label><input type="text" name="company" placeholder="Your Company Name" required></div>
           <div class="form-row">
-            <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
+            <div><label>Email<span class="req">*</span></label><input type="email" name="email" placeholder="john@company.com" required></div>
             <div><label>Phone</label><input type="tel" name="phone" placeholder="(312) 555-0100"></div>
           </div>
-          <div><label>What Product Do You Manufacture?</label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
+          <div><label>What Product Do You Manufacture?<span class="req">*</span></label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
           <div><label>Who Are Your Top Competitors?</label><input type="text" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
           <div class="form-row">
             <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
@@ -448,15 +448,15 @@
     <form class="form-wrap" data-lead-form data-form-id="index-modal" novalidate>
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-5000px;">
       <div class="form-row">
-        <div><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+        <div><label>First Name<span class="req">*</span></label><input type="text" name="first_name" placeholder="John" required></div>
         <div><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"></div>
       </div>
-      <div><label>Company / Manufacturer</label><input type="text" name="company" placeholder="Your Company Name"></div>
+      <div><label>Company / Manufacturer<span class="req">*</span></label><input type="text" name="company" placeholder="Your Company Name" required></div>
       <div class="form-row">
-        <div><label>Email</label><input type="email" name="email" placeholder="john@company.com" required></div>
+        <div><label>Email<span class="req">*</span></label><input type="email" name="email" placeholder="john@company.com" required></div>
         <div><label>Phone</label><input type="tel" name="phone" placeholder="(312) 555-0100"></div>
       </div>
-      <div><label>What Product Do You Manufacture?</label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
+      <div><label>What Product Do You Manufacture?<span class="req">*</span></label><input type="text" name="product" placeholder="e.g. Air barriers, cladding systems, HVAC components…" required></div>
       <div><label>Who Are Your Top Competitors?</label><input type="text" name="competitors" placeholder="e.g. DuPont Tyvek, 3M, Armstrong…"></div>
       <div class="form-row">
         <div><label>CSI Six Digit Code</label><input type="text" name="csi_code" placeholder="e.g. 07 42 13" maxlength="8" autocomplete="off"></div>
@@ -479,6 +479,28 @@ document.querySelectorAll('input[name="csi_code"]').forEach(el => {
   el.addEventListener('input', function () {
     const digits = this.value.replace(/\D/g, '').slice(0, 6);
     this.value = digits.match(/.{1,2}/g)?.join(' ') ?? '';
+  });
+});
+
+document.querySelectorAll('input[name="phone"]').forEach(el => {
+  el.addEventListener('input', function () {
+    const digits = this.value.replace(/\D/g, '').slice(0, 10);
+    let formatted = '';
+    if (digits.length === 0) {
+      formatted = '';
+    } else if (digits.length <= 3) {
+      formatted = '(' + digits;
+    } else if (digits.length <= 6) {
+      formatted = '(' + digits.slice(0, 3) + ') ' + digits.slice(3);
+    } else {
+      formatted = '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6);
+    }
+    this.value = formatted;
+  });
+  el.addEventListener('keydown', function (e) {
+    const allowed = ['Backspace','Delete','Tab','Escape','Enter','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
+    if (allowed.includes(e.key)) return;
+    if (!/^\d$/.test(e.key)) e.preventDefault();
   });
 });
 
