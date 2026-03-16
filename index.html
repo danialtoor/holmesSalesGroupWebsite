@@ -33,7 +33,8 @@
   "name": "Holmes Sales Group",
   "description": "Building product specification firm helping manufacturers get their products into architectural construction documents. CSI certified. 25+ years experience.",
   "url": "https://holmessalesgroup.com",
-  "email": "info@holmessalesgroup.com",
+  "email": "doug@holmessalesinc.com",
+  "telephone": "+13124801566",
   "areaServed": "United States",
   "address": {
     "@type": "PostalAddress",
@@ -407,7 +408,7 @@
     <li><a href="#pricing">Pricing</a></li>
     <!-- <li><a href="#contact">Contact</a></li> -->
   </ul>
-  <div class="footer-copy">© 2025 Holmes Sales Group, Inc. · Building Product Specification · Nationwide</div>
+  <div class="footer-copy">© 2026 Holmes Sales Group, Inc. · Building Product Specification · Nationwide</div>
 </footer>
 
 <!-- TABLE IMAGE LIGHTBOX -->
@@ -568,19 +569,21 @@ document.addEventListener('keydown', e => {
 });
 
 const tableImages = [
-  'images/table-images/mcdonalds-headquarters-ia-interior-architects-studio-o-a-chicago-illinois-us_dezeen_2364_col_4-852x594.jpg',
-  'images/table-images/NexusPark-Exterior-Park-at-25th-1-scaled.jpg',
-  'images/table-images/bowenHealthCenter.jpg',
-  'images/table-images/RCHinsdaleElemetary.jpg',
-  'images/table-images/GailBorden.jpg',
-  'images/table-images/forestHills.jpg',
-  'images/table-images/metroState.jpg',
-  'images/table-images/kelloggBusinessSchool.jpeg',
+  { src: 'images/table-images/mcdonalds-headquarters-ia-interior-architects-studio-o-a-chicago-illinois-us_dezeen_2364_col_4-852x594.jpg', alt: "Hamburger University, McDonald's Corp. – Oak Brook, IL – Architectural Hardware specification by Holmes Sales Group" },
+  { src: 'images/table-images/NexusPark-Exterior-Park-at-25th-1-scaled.jpg', alt: 'Nexus Park – Columbus, IN – Operable Partitions specification by Holmes Sales Group' },
+  { src: 'images/table-images/bowenHealthCenter.jpg', alt: 'Bowen Health Center – Indiana – Acoustic Ceiling specification by Holmes Sales Group' },
+  { src: 'images/table-images/RCHinsdaleElemetary.jpg', alt: 'R.C. Hinsdale Elementary School – Edgewood, KY – ACM Panels specification by Holmes Sales Group' },
+  { src: 'images/table-images/GailBorden.jpg', alt: 'Gail Borden Public Library – Elgin, IL – Operable and Glass Operable Partitions specification by Holmes Sales Group' },
+  { src: 'images/table-images/forestHills.jpg', alt: 'Forest Hills Elementary School – Western Springs, IL – Operable Partitions specification by Holmes Sales Group' },
+  { src: 'images/table-images/metroState.jpg', alt: 'Metro State University – St. Paul, MN – Glass Operable Partitions specification by Holmes Sales Group' },
+  { src: 'images/table-images/kelloggBusinessSchool.jpeg', alt: 'Kellogg School of Management, Northwestern University – Evanston, IL – Tile Flooring specification by Holmes Sales Group' },
 ];
 function openTableModal(index) {
-  const src = tableImages[index];
-  if (!src) return;
-  document.getElementById('img-lightbox').src = src;
+  const item = tableImages[index];
+  if (!item) return;
+  const lightbox = document.getElementById('img-lightbox');
+  lightbox.src = item.src;
+  lightbox.alt = item.alt;
   document.getElementById('img-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -644,6 +647,7 @@ function updateGalleryImage() {
   img.classList.add('fading');
   setTimeout(() => {
     img.src = heroImages[galleryIndex];
+    img.alt = `Holmes Sales Group project gallery – image ${galleryIndex + 1} of ${heroImages.length}`;
     img.onload = () => img.classList.remove('fading');
   }, 150);
   document.getElementById('gallery-counter').textContent = `${galleryIndex + 1} / ${heroImages.length}`;
