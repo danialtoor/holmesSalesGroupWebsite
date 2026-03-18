@@ -273,7 +273,7 @@ document.querySelectorAll('input[name="csi_code"]').forEach(el => {
 // ── DATA ──
 const categoryData = {
   'air-barrier':  { label: 'Air Barriers (Div 07)', base: 180, openRate: 0.28, lockedRate: 0.48, compRate: 0.62, insight: 'Air barrier specs are dominated by DuPont Tyvek and 3M in most markets. A single spec win typically goes on an entire building envelope.' },
-  'cladding':     { label: 'Cladding / ACM Panels (Div 07)', base: 140, openRate: 0.32, lockedRate: 0.42, compRate: 0.58, insight: 'Cladding specs are locked early in schematic design. Gensler and Perkins Will have preferred vendor lists that require direct technical advocacy to break into.' },
+  'cladding':     { label: 'Cladding / ACM Panels (Div 07)', base: 140, openRate: 0.32, lockedRate: 0.42, compRate: 0.58, insight: 'Cladding specs are locked early in schematic design. Gensler and Perkins+Will have preferred vendor lists that require direct technical advocacy to break into.' },
   'hvac':         { label: 'HVAC Components (Div 23)', base: 220, openRate: 0.24, lockedRate: 0.52, compRate: 0.66, insight: 'HVAC specs involve multiple sub-categories. A single project win can represent substantial unit volume across an entire mechanical system.' },
   'flooring':     { label: 'Flooring Systems (Div 09)', base: 200, openRate: 0.30, lockedRate: 0.45, compRate: 0.60, insight: 'Flooring specs are written early and rarely changed. Architects default to brands they\'ve specified before, breaking in requires samples, comparison data, and A&D firm presence.' },
   'ceiling':      { label: 'Acoustic Ceiling (Div 09)', base: 160, openRate: 0.26, lockedRate: 0.50, compRate: 0.68, insight: 'Armstrong and USG dominate most ceiling specs. Competitors with equivalent or superior performance consistently lose specs they never knew existed.' },
@@ -470,7 +470,7 @@ function bindLeadForm(form) {
       form.reset();
       closeModal();
     } catch (error) {
-      setFormStatus(form, 'Submission failed. Please email info@holmessalesgroup.com.', 'is-error');
+      setFormStatus(form, 'Submission failed. Please email doug@holmessalesinc.com.', 'is-error');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
