@@ -481,7 +481,7 @@ function showToast(type, title, msg) {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  toast.innerHTML = `<div class="toast-icon">${type === 'success' ? '✓' : '✕'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  toast.innerHTML = `<div class="toast-icon">${type === 'success' ? '✔' : '✖'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
   container.appendChild(toast);
   requestAnimationFrame(() => { requestAnimationFrame(() => { toast.classList.add('toast-show'); }); });
   setTimeout(() => {
