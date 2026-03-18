@@ -119,35 +119,35 @@ function buildEmail(payload, ip) {
   return { subject, text, html };
 }
 
-async function sendWithResend(payload, ip) {
-  const apiKey = process.env.RESEND_API_KEY;
+async function sendWithBrevo(payload, ip) {
+  const apiKey = process.env.BREVO_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
 
   if (!apiKey || !toEmail || !fromEmail) {
-    throw new Error("Missing RESEND_API_KEY, CONTACT_TO_EMAIL, or CONTACT_FROM_EMAIL");
+    throw new Error("Missing BREVO_API_KEY, CONTACT_TO_EMAIL, or CONTACT_FROM_EMAIL");
   }
 
   const { subject, text, html } = buildEmail(payload, ip);
-  const response = await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      "api-key": apiKey,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      reply_to: payload.email || undefined,
+      sender: { email: fromEmail },
+      to: [{ email: toEmail }],
+      replyTo: { email: payload.email || fromEmail },
       subject,
-      text,
-      html
+      textContent: text,
+      htmlContent: html
     })
   });
 
   if (!response.ok) {
     const body = await response.text();
-    throw new Error(`Resend error (${response.status}): ${body}`);
+    throw new Error(`Brevo error (${response.status}): ${body}`);
   }
 }
 
@@ -186,7 +186,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    await sendWithResend(payload, ip);
+    await sendWithBrevo(payload, ip);
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("contact submit failed", error);
