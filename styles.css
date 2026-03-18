@@ -31,6 +31,7 @@ body { font-family: 'IBM Plex Sans', sans-serif; overflow-x: hidden; }
 .form-wrap label .req { color: #e05252; margin-left: 2px; }
 .form-wrap input, .form-wrap textarea { width: 100%; padding: 11px 13px; background: var(--white); border: 1px solid var(--concrete); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.86rem; color: var(--ink); outline: none; transition: border 0.2s; }
 .form-wrap input:focus, .form-wrap textarea:focus { border-color: var(--amber); }
+.form-wrap input::placeholder, .form-wrap textarea::placeholder { color: #cfd8dc; opacity: 1; }
 .form-wrap textarea { height: 100px; resize: vertical; }
 .form-submit { width: 100%; padding: 14px; background: var(--amber); color: var(--white); border: none; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 4px; }
 .form-submit:hover { background: var(--amber-light); }
