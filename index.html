@@ -583,7 +583,7 @@ function bindLeadForm(form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Form submit failed');
-      showToast('success', 'Message Sent!', 'Thanks. HSG will be in touch shortly.');
+      showToast('success', 'Message Sent!', 'Thanks. Holmes Sales Group will be in touch shortly.');
       form.reset();
       if (payload.form_id.includes('modal')) closeModal();
     } catch (error) {
