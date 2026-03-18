@@ -474,7 +474,22 @@
   </div>
 </div>
 
+<div id="toast-container"></div>
+
 <script>
+function showToast(type, title, msg) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `<div class="toast-icon">${type === 'success' ? '✓' : '✕'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { toast.classList.add('toast-show'); }); });
+  setTimeout(() => {
+    toast.classList.add('toast-hide');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 4500);
+}
+
 document.querySelectorAll('input[name="csi_code"]').forEach(el => {
   el.addEventListener('input', function () {
     const digits = this.value.replace(/\D/g, '').slice(0, 6);
@@ -568,11 +583,11 @@ function bindLeadForm(form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Form submit failed');
-      setFormStatus(form, 'Thanks. Doug will be in touch shortly.', 'is-success');
+      showToast('success', 'Message Sent!', 'Thanks. Doug will be in touch shortly.');
       form.reset();
       if (payload.form_id.includes('modal')) closeModal();
     } catch (error) {
-      setFormStatus(form, 'Submission failed. Please email doug@holmessalesinc.com.', 'is-error');
+      showToast('error', 'Submission Failed', 'Please email doug@holmessalesinc.com.');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

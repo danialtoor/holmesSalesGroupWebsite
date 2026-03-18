@@ -466,11 +466,11 @@ function bindLeadForm(form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Form submit failed');
-      setFormStatus(form, 'Thanks. HSG will be in touch shortly.', 'is-success');
+      showToast('success', 'Message Sent!', 'Thanks. HSG will be in touch shortly.');
       form.reset();
       closeModal();
     } catch (error) {
-      setFormStatus(form, 'Submission failed. Please email doug@holmessalesinc.com.', 'is-error');
+      showToast('error', 'Submission Failed', 'Please email doug@holmessalesinc.com.');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -481,6 +481,20 @@ function bindLeadForm(form) {
 }
 document.querySelectorAll('form[data-lead-form]').forEach(bindLeadForm);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function showToast(type, title, msg) {
+  let container = document.getElementById('toast-container');
+  if (!container) { container = document.createElement('div'); container.id = 'toast-container'; document.body.appendChild(container); }
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `<div class="toast-icon">${type === 'success' ? '✓' : '✕'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { toast.classList.add('toast-show'); }); });
+  setTimeout(() => {
+    toast.classList.add('toast-hide');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, 4500);
+}
 </script>
 </body>
 </html>
